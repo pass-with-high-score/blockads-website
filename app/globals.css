@@ -129,3 +129,39 @@ body {
   margin-bottom: 0.35rem;
   line-height: 1.6;
 }
+
+/* Shimmer animation for testing badge */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-badge {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(251, 191, 36, 0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Badge glow */
+.glow-amber {
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.12);
+}
+
+/* Step card hover lift */
+.step-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}

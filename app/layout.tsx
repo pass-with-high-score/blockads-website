@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 import MobileNav from "./components/MobileNav";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -12,6 +13,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "BlockAds – Ad Blocker for Android | No Root",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   description:
     "Block ads & trackers system-wide on Android. DNS filtering, no root needed. Free & open source.",
   metadataBase: new URL("https://blockads.pwhs.app/"),
@@ -46,9 +51,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#0a0a0f]/80 border-b border-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-[#00E676] flex items-center justify-center text-black font-bold text-sm">
-            B
-          </div>
+          <Image src="/icon.svg" alt="BlockAds" width={32} height={32} className="rounded-lg" />
           <span className="font-semibold text-lg">
             Block<span className="text-[#00E676]">Ads</span>
           </span>
@@ -68,14 +71,12 @@ function Navbar() {
           <Link href="/terms" className="hover:text-white transition-colors">
             Terms
           </Link>
-          <a
-            href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-[#00E676] text-black font-medium rounded-full text-sm hover:bg-[#00C853] transition-colors"
+          <Link
+            href="/testing"
+            className="px-4 py-2 bg-amber-400 text-black font-medium rounded-full text-sm hover:bg-amber-300 transition-colors"
           >
-            Download
-          </a>
+            Join Beta
+          </Link>
         </div>
 
         {/* Mobile nav */}
@@ -92,9 +93,7 @@ function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[#00E676] flex items-center justify-center text-black font-bold text-xs">
-                B
-              </div>
+              <Image src="/icon.svg" alt="BlockAds" width={28} height={28} className="rounded-lg" />
               <span className="font-semibold">
                 Block<span className="text-[#00E676]">Ads</span>
               </span>
@@ -110,6 +109,9 @@ function Footer() {
             <div className="flex flex-col gap-2 text-sm text-[#8888a0]">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
+              </Link>
+              <Link href="/testing" className="hover:text-white transition-colors">
+                Join Beta
               </Link>
               <Link
                 href="/privacy"

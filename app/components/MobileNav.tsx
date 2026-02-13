@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { FlaskConical } from "lucide-react";
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
@@ -45,8 +46,8 @@ export default function MobileNav() {
             {/* Mobile menu overlay */}
             <div
                 className={`fixed left-0 right-0 bottom-0 top-16 z-40 bg-[#0a0a0f] border-t border-white/5 h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out ${open
-                        ? "opacity-100 pointer-events-auto"
-                        : "opacity-0 pointer-events-none"
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
                     }`}
                 onClick={() => setOpen(false)}
             >
@@ -75,14 +76,14 @@ export default function MobileNav() {
                     >
                         Terms
                     </Link>
-                    <a
-                        href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-4 px-10 py-4 bg-[#00E676] text-black font-semibold rounded-full hover:bg-[#00C853] transition-all hover:scale-105"
+                    <Link
+                        href="/testing"
+                        onClick={() => setOpen(false)}
+                        className="mt-4 inline-flex items-center gap-2 px-10 py-4 bg-amber-400 text-black font-semibold rounded-full hover:bg-amber-300 transition-all hover:scale-105"
                     >
-                        Download
-                    </a>
+                        <FlaskConical className="w-5 h-5" />
+                        Join Beta
+                    </Link>
                 </div>
             </div>
         </div>
