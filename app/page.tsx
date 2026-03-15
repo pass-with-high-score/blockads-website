@@ -11,7 +11,6 @@ import {
   Save,
   Battery,
   Gift,
-  FlaskConical,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -26,12 +25,6 @@ export default function Home() {
         </div>
 
         <div className="text-center px-6 relative z-10 max-w-3xl mx-auto">
-          {/* Closed Testing Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-400 text-sm font-semibold mb-8 shimmer-badge glow-amber">
-            <FlaskConical className="w-4 h-4" />
-            Closed Testing
-          </div>
-
           {/* Title */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
             Block Ads.
@@ -46,13 +39,6 @@ export default function Home() {
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/testing"
-              className="px-8 py-4 bg-amber-400 text-black font-semibold rounded-2xl text-lg hover:bg-amber-300 transition-all hover:scale-105 glow-amber flex items-center gap-2"
-            >
-              <FlaskConical className="w-5 h-5" />
-              Join Closed Testing
-            </Link>
             <a
               href="https://github.com/nqmgaming/blockads-android"
               target="_blank"
@@ -246,40 +232,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Join Closed Testing Banner ────────────────────── */}
-      <section className="py-20 px-6 mesh-bg">
-        <div className="max-w-3xl mx-auto">
-          <div className="relative p-8 md:p-12 rounded-3xl bg-gradient-to-br from-amber-400/10 via-amber-500/5 to-transparent border border-amber-400/20 glow-amber overflow-hidden">
-            {/* Decorative glow */}
-            <div className="absolute -top-20 -right-20 w-60 h-60 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative z-10 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-400 text-xs font-semibold mb-6 uppercase tracking-wider">
-                <FlaskConical className="w-3.5 h-3.5" />
-                Early Access
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Be Among the First Testers
-              </h2>
-              <p className="text-[#8888a0] max-w-lg mx-auto mb-8 leading-relaxed">
-                BlockAds is currently in closed testing on Google Play. Join our
-                tester group to get early access, try new features first, and
-                help shape the app before public release.
-              </p>
-
-              <Link
-                href="/testing"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-amber-400 text-black font-semibold rounded-2xl text-lg hover:bg-amber-300 transition-all hover:scale-105"
-              >
-                <FlaskConical className="w-5 h-5" />
-                Learn How to Join
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ─────────────────────────────────────────── */}
       <section className="py-24 px-6 text-center">
         <div className="max-w-2xl mx-auto">
@@ -287,14 +239,16 @@ export default function Home() {
             Ready for an Ad-Free Life?
           </h2>
           <p className="text-[#8888a0] mb-10">
-            Join the closed testing and take back control of your Android experience.
+            Take back control of your Android experience today.
           </p>
-          <Link
-            href="/testing"
+          <a
+            href="https://github.com/nqmgaming/blockads-android"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-10 py-4 bg-[#00E676] text-black font-semibold rounded-2xl text-lg hover:bg-[#00C853] transition-all hover:scale-105 glow"
           >
-            Join Closed Testing — Free
-          </Link>
+            Download on GitHub
+          </a>
         </div>
       </section>
     </>

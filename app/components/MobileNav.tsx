@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FlaskConical } from "lucide-react";
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
@@ -76,14 +75,7 @@ export default function MobileNav() {
                     >
                         Terms
                     </Link>
-                    <Link
-                        href="/testing"
-                        onClick={() => setOpen(false)}
-                        className="mt-4 inline-flex items-center gap-2 px-10 py-4 bg-amber-400 text-black font-semibold rounded-full hover:bg-amber-300 transition-all hover:scale-105"
-                    >
-                        <FlaskConical className="w-5 h-5" />
-                        Join Beta
-                    </Link>
+
                 </div>
             </div>
         </div>

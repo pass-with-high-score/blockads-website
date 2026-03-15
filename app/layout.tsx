@@ -71,12 +71,6 @@ function Navbar() {
           <Link href="/terms" className="hover:text-white transition-colors">
             Terms
           </Link>
-          <Link
-            href="/testing"
-            className="px-4 py-2 bg-amber-400 text-black font-medium rounded-full text-sm hover:bg-amber-300 transition-colors"
-          >
-            Join Beta
-          </Link>
         </div>
 
         {/* Mobile nav */}
@@ -90,7 +84,7 @@ function Footer() {
   return (
     <footer className="border-t border-white/5 py-12 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image src="/icon.svg" alt="BlockAds" width={28} height={28} className="rounded-lg" />
@@ -110,9 +104,6 @@ function Footer() {
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
-              <Link href="/testing" className="hover:text-white transition-colors">
-                Join Beta
-              </Link>
               <Link
                 href="/privacy"
                 className="hover:text-white transition-colors"
@@ -126,21 +117,6 @@ function Footer() {
                 Terms of Service
               </Link>
             </div>
-          </div>
-          <div>
-            <h4 className="font-semibold text-sm mb-3">Download</h4>
-            <a
-              href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <img
-                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                alt="Get it on Google Play"
-                className="h-14"
-              />
-            </a>
           </div>
         </div>
         <div className="mt-10 pt-6 border-t border-white/5 text-center text-xs text-[#8888a0]">
