@@ -23,20 +23,20 @@ export default function MobileNav() {
             {/* Hamburger button */}
             <button
                 onClick={() => setOpen(!open)}
-                className="relative w-10 h-10 flex items-center justify-center text-white z-50"
+                className="relative w-10 h-10 flex items-center justify-center text-gray-900 z-50"
                 aria-label="Toggle menu"
             >
                 <div className="flex flex-col gap-1.5">
                     <span
-                        className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${open ? "rotate-45 translate-y-2" : ""
+                        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ease-in-out ${open ? "rotate-45 translate-y-2" : ""
                             }`}
                     />
                     <span
-                        className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${open ? "opacity-0" : ""
+                        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ease-in-out ${open ? "opacity-0" : ""
                             }`}
                     />
                     <span
-                        className={`block w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${open ? "-rotate-45 -translate-y-2" : ""
+                        className={`block w-6 h-0.5 bg-gray-900 transition-all duration-300 ease-in-out ${open ? "-rotate-45 -translate-y-2" : ""
                             }`}
                     />
                 </div>
@@ -44,7 +44,7 @@ export default function MobileNav() {
 
             {/* Mobile menu overlay */}
             <div
-                className={`fixed left-0 right-0 bottom-0 top-16 z-40 bg-[#0a0a0f] border-t border-white/5 h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out ${open
+                className={`fixed left-0 right-0 bottom-0 top-16 z-40 bg-white border-t border-gray-200 h-[calc(100vh-4rem)] transition-all duration-300 ease-in-out ${open
                     ? "opacity-100 pointer-events-auto"
                     : "opacity-0 pointer-events-none"
                     }`}
@@ -57,25 +57,49 @@ export default function MobileNav() {
                     <Link
                         href="/#features"
                         onClick={() => setOpen(false)}
-                        className="text-xl text-[#8888a0] hover:text-white transition-colors"
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         Features
                     </Link>
                     <Link
                         href="/privacy"
                         onClick={() => setOpen(false)}
-                        className="text-xl text-[#8888a0] hover:text-white transition-colors"
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         Privacy
                     </Link>
                     <Link
                         href="/terms"
                         onClick={() => setOpen(false)}
-                        className="text-xl text-[#8888a0] hover:text-white transition-colors"
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         Terms
                     </Link>
-
+                    <a
+                        href="mailto:nguyenquangminh570@gmail.com"
+                        onClick={() => setOpen(false)}
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                        Contact
+                    </a>
+                    <a
+                        href="https://t.me/blockads_android"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                        Telegram
+                    </a>
+                    <a
+                        href="https://www.reddit.com/r/BlockAds/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                        Reddit
+                    </a>
                 </div>
             </div>
         </div>

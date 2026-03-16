@@ -12,13 +12,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BlockAds – Ad Blocker for Android | No Root",
+  title: "BlockAds – Free Ad Blocker for Android | No Root",
   icons: {
     icon: "/favicon.svg",
     apple: "/favicon.svg",
   },
   description:
-    "Block ads & trackers system-wide on Android. DNS filtering, no root needed. Free & open source.",
+    "Protect your privacy with BlockAds. Block ads and trackers system-wide on Android using smart DNS filtering. No root needed, 100% free, and open source.",
   metadataBase: new URL("https://blockads.pwhs.app/"),
   keywords: [
     "ad blocker",
@@ -29,26 +29,42 @@ export const metadata: Metadata = {
     "no root",
     "free",
     "open source",
+    "tracker blocker",
+    "system-wide adblock",
   ],
+  authors: [{ name: "pass-with-high-score" }],
+  creator: "pass-with-high-score",
+  publisher: "BlockAds",
+  robots: "index, follow",
   openGraph: {
-    title: "BlockAds – Ad Blocker for Android",
+    title: "BlockAds – Free System-Wide Ad Blocker for Android",
     description:
-      "Block ads system-wide. No root. DNS filtering. Free & open source!",
-    type: "website",
-    locale: "en_US",
+      "Block ads system-wide. No root required. DNS filtering to protect your privacy. Free & open source!",
+    url: "https://blockads.pwhs.app/",
     siteName: "BlockAds",
+    images: [
+      {
+        url: "/1.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "BlockAds App Home Screen",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlockAds – Ad Blocker for Android",
+    title: "BlockAds – Free Ad Blocker for Android",
     description:
-      "Block ads system-wide. No root. DNS filtering. Free & open source!",
+      "Block ads system-wide. No root required. DNS filtering to protect your privacy. Free & open source!",
+    images: ["/1.jpg"],
   },
 };
 
 function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#0a0a0f]/80 border-b border-white/5">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
           <Image src="/icon.svg" alt="BlockAds" width={32} height={32} className="rounded-lg" />
@@ -58,19 +74,28 @@ function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-6 text-sm text-[#8888a0]">
+        <div className="hidden md:flex items-center gap-6 text-sm text-gray-600">
           <Link
             href="/#features"
-            className="hover:text-white transition-colors"
+            className="hover:text-gray-900 transition-colors"
           >
             Features
           </Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">
+          <Link href="/privacy" className="hover:text-gray-900 transition-colors">
             Privacy
           </Link>
-          <Link href="/terms" className="hover:text-white transition-colors">
+          <Link href="/terms" className="hover:text-gray-900 transition-colors">
             Terms
           </Link>
+          <a href="mailto:nguyenquangminh570@gmail.com" className="hover:text-gray-900 transition-colors">
+            Contact
+          </a>
+          <a href="https://t.me/blockads_android" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
+            Telegram
+          </a>
+          <a href="https://www.reddit.com/r/BlockAds/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
+            Reddit
+          </a>
         </div>
 
         {/* Mobile nav */}
@@ -82,7 +107,7 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/5 py-12 mt-20">
+    <footer className="border-t border-gray-200 py-12 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div>
@@ -92,7 +117,7 @@ function Footer() {
                 Block<span className="text-[#00E676]">Ads</span>
               </span>
             </div>
-            <p className="text-sm text-[#8888a0] leading-relaxed">
+            <p className="text-sm text-gray-600 leading-relaxed">
               Free, open-source ad blocker for Android.
               <br />
               No root. No data collection. No ads.
@@ -100,26 +125,40 @@ function Footer() {
           </div>
           <div>
             <h4 className="font-semibold text-sm mb-3">Links</h4>
-            <div className="flex flex-col gap-2 text-sm text-[#8888a0]">
-              <Link href="/" className="hover:text-white transition-colors">
+            <div className="flex flex-col gap-2 text-sm text-gray-600">
+              <Link href="/" className="hover:text-gray-900 transition-colors">
                 Home
               </Link>
               <Link
                 href="/privacy"
-                className="hover:text-white transition-colors"
+                className="hover:text-gray-900 transition-colors"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-white transition-colors"
+                className="hover:text-gray-900 transition-colors"
               >
                 Terms of Service
               </Link>
             </div>
           </div>
+          <div>
+            <h4 className="font-semibold text-sm mb-3">Community</h4>
+            <div className="flex flex-col gap-2 text-sm text-gray-600">
+              <a href="mailto:nguyenquangminh570@gmail.com" className="hover:text-gray-900 transition-colors">
+                Email
+              </a>
+              <a href="https://t.me/blockads_android" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
+                Telegram
+              </a>
+              <a href="https://www.reddit.com/r/BlockAds/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
+                Reddit
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="mt-10 pt-6 border-t border-white/5 text-center text-xs text-[#8888a0]">
+        <div className="mt-10 pt-6 border-t border-gray-200 text-center text-xs text-gray-600">
           © {new Date().getFullYear()} BlockAds. All rights reserved.
         </div>
       </div>

@@ -11,8 +11,11 @@ import {
   Save,
   Battery,
   Gift,
+  Github,
+  Download,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -29,10 +32,10 @@ export default function Home() {
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
             Block Ads.
             <br />
-            <span className="text-[#00E676] glow-text">Protect Privacy.</span>
+            <span className="text-[#00E676] drop-shadow-md">Protect Privacy.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-[#8888a0] max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed">
             System-wide ad blocking for Android using smart DNS filtering. No
             root required. No data collection. Just peace of mind.
           </p>
@@ -40,30 +43,57 @@ export default function Home() {
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://github.com/pass-with-high-score/blockads-android"
+              href="https://github.com/pass-with-high-score/blockads-android/releases"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 border border-white/10 text-white font-medium rounded-2xl text-lg hover:bg-white/5 transition-all"
+              className="px-8 py-4 border border-gray-200 text-gray-900 font-medium rounded-2xl text-lg hover:bg-gray-100 transition-all flex items-center justify-center gap-2"
             >
-              View on GitHub
+              <Github className="w-5 h-5" />
+              GitHub Releases
+            </a>
+            <a
+              href="https://apt.izzysoft.de/packages/app.pwhs.blockads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 border border-[#00E676]/30 text-[#00E676] bg-[#00E676]/5 font-medium rounded-2xl text-lg hover:bg-[#00E676]/10 transition-all flex items-center justify-center gap-2"
+            >
+              <Download className="w-5 h-5" />
+              IzzyOnDroid
             </a>
           </div>
 
           {/* Stats */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mt-14 text-sm text-[#8888a0]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mt-14 text-sm text-gray-600">
             <div className="flex flex-col items-center">
-              <div className="text-2xl font-bold text-white">100%</div>
+              <div className="text-2xl font-bold text-gray-900">100%</div>
               <div>Free</div>
             </div>
-            <div className="hidden sm:block w-px h-8 bg-white/10" />
+            <div className="hidden sm:block w-px h-8 bg-gray-200" />
             <div className="flex flex-col items-center">
-              <div className="text-2xl font-bold text-white">0</div>
+              <div className="text-2xl font-bold text-gray-900">0</div>
               <div>Data collected</div>
             </div>
-            <div className="hidden sm:block w-px h-8 bg-white/10" />
+            <div className="hidden sm:block w-px h-8 bg-gray-200" />
             <div className="flex flex-col items-center">
-              <div className="text-2xl font-bold text-white">No</div>
+              <div className="text-2xl font-bold text-gray-900">No</div>
               <div>Root needed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Screenshots ───────────────────────────────────── */}
+      <section className="py-12 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group">
+              <Image src="/1.jpg" alt="Home Screen" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group md:-translate-y-8">
+              <Image src="/2.jpg" alt="Filter Lists" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group">
+              <Image src="/3.jpg" alt="Settings" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
             </div>
           </div>
         </div>
@@ -75,7 +105,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             How It Works
           </h2>
-          <p className="text-[#8888a0] max-w-lg mx-auto">
+          <p className="text-gray-600 max-w-lg mx-auto">
             Three simple steps to an ad-free Android experience.
           </p>
         </div>
@@ -103,14 +133,14 @@ export default function Home() {
           ].map((item) => (
             <div
               key={item.step}
-              className="relative p-6 rounded-2xl bg-[#12121a] border border-white/5 hover:border-[#00E676]/20 transition-all group"
+              className="relative p-6 rounded-2xl bg-white border border-gray-200 hover:border-[#00E676]/30 transition-all shadow-md group"
             >
               <item.icon className="w-12 h-12 mb-4 text-[#00E676]" />
               <div className="text-xs font-mono text-[#00E676] mb-2">
                 Step {item.step}
               </div>
               <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-              <p className="text-sm text-[#8888a0]">{item.desc}</p>
+              <p className="text-sm text-gray-600">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -122,7 +152,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Packed with Features
           </h2>
-          <p className="text-[#8888a0] max-w-lg mx-auto">
+          <p className="text-gray-600 max-w-lg mx-auto">
             Everything you need for a clean, private Android experience.
           </p>
         </div>
@@ -177,11 +207,11 @@ export default function Home() {
           ].map((feature) => (
             <div
               key={feature.title}
-              className="p-5 rounded-2xl bg-[#12121a]/80 border border-white/5 hover:border-[#00E676]/15 transition-all"
+              className="p-5 rounded-2xl bg-white/80 border border-gray-200 hover:border-[#00E676]/30 transition-all shadow-sm"
             >
               <feature.icon className="w-8 h-8 mb-3 text-[#00E676]" />
               <h3 className="font-semibold mb-1.5">{feature.title}</h3>
-              <p className="text-sm text-[#8888a0] leading-relaxed">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 {feature.desc}
               </p>
             </div>
@@ -195,7 +225,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
             Built with Trust
           </h2>
-          <p className="text-[#8888a0] text-center max-w-lg mx-auto mb-12">
+          <p className="text-gray-600 text-center max-w-lg mx-auto mb-12">
             Privacy is not just a feature — it&apos;s our foundation.
           </p>
 
@@ -220,10 +250,10 @@ export default function Home() {
             ].map((faq) => (
               <div
                 key={faq.q}
-                className="p-5 rounded-2xl bg-[#12121a] border border-white/5"
+                className="p-5 rounded-2xl bg-white border border-gray-200"
               >
                 <h3 className="font-semibold mb-2">{faq.q}</h3>
-                <p className="text-sm text-[#8888a0] leading-relaxed">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   {faq.a}
                 </p>
               </div>
@@ -238,17 +268,29 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready for an Ad-Free Life?
           </h2>
-          <p className="text-[#8888a0] mb-10">
+          <p className="text-gray-600 mb-10">
             Take back control of your Android experience today.
           </p>
-          <a
-            href="https://github.com/pass-with-high-score/blockads-android/blockads-android"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-10 py-4 bg-[#00E676] text-black font-semibold rounded-2xl text-lg hover:bg-[#00C853] transition-all hover:scale-105 glow"
-          >
-            Download on GitHub
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://github.com/pass-with-high-score/blockads-android/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 border border-gray-300 bg-white text-gray-900 font-semibold rounded-2xl text-lg hover:bg-gray-50 transition-all shadow-sm"
+            >
+              <Github className="w-5 h-5" />
+              GitHub Releases
+            </a>
+            <a
+              href="https://apt.izzysoft.de/packages/app.pwhs.blockads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#00E676] text-black font-semibold rounded-2xl text-lg hover:bg-[#00C853] transition-all hover:scale-105 shadow-lg shadow-[#00E676]/30"
+            >
+              <Download className="w-5 h-5" />
+              Get on IzzyOnDroid
+            </a>
+          </div>
         </div>
       </section>
     </>

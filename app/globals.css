@@ -3,11 +3,11 @@
 :root {
   --accent: #00E676;
   --accent-dim: #00C853;
-  --bg-dark: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-card-hover: #1a1a2e;
-  --text-primary: #f0f0f5;
-  --text-secondary: #8888a0;
+  --bg-dark: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f3f5;
+  --text-primary: #12121a;
+  --text-secondary: #5f6368;
 }
 
 * {
@@ -101,7 +101,7 @@ body {
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: var(--text-primary);
+  color: #12121a;
 }
 
 .legal-content h3 {
@@ -109,20 +109,20 @@ body {
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #12121a;
 }
 
 .legal-content p {
   margin-bottom: 1rem;
   line-height: 1.75;
-  color: var(--text-secondary);
+  color: #5f6368;
 }
 
 .legal-content ul {
   list-style: disc;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--text-secondary);
+  color: #5f6368;
 }
 
 .legal-content li {
