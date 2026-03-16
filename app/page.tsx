@@ -40,7 +40,7 @@ export default function Home() {
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://github.com/nqmgaming/blockads-android"
+              href="https://github.com/pass-with-high-score/blockads-android"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 border border-white/10 text-white font-medium rounded-2xl text-lg hover:bg-white/5 transition-all"
@@ -242,7 +242,7 @@ export default function Home() {
             Take back control of your Android experience today.
           </p>
           <a
-            href="https://github.com/nqmgaming/blockads-android"
+            href="https://github.com/pass-with-high-score/blockads-android/blockads-android"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-10 py-4 bg-[#00E676] text-black font-semibold rounded-2xl text-lg hover:bg-[#00C853] transition-all hover:scale-105 glow"
