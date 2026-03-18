@@ -62,6 +62,13 @@ export default function MobileNav() {
                         Features
                     </Link>
                     <Link
+                        href="/compiler"
+                        onClick={() => setOpen(false)}
+                        className="text-xl text-[#00E676] font-medium hover:text-[#00C853] transition-colors"
+                    >
+                        Compiler
+                    </Link>
+                    <Link
                         href="/privacy"
                         onClick={() => setOpen(false)}
                         className="text-xl text-gray-600 hover:text-gray-900 transition-colors"

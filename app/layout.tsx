@@ -81,6 +81,12 @@ function Navbar() {
           >
             Features
           </Link>
+          <Link
+            href="/compiler"
+            className="hover:text-[#00E676] transition-colors font-medium text-gray-800"
+          >
+            Compiler
+          </Link>
           <Link href="/privacy" className="hover:text-gray-900 transition-colors">
             Privacy
           </Link>
