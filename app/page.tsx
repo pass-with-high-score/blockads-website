@@ -13,6 +13,11 @@ import {
   Gift,
   Github,
   Download,
+  Heart,
+  Globe,
+  Database,
+  ListFilter,
+  Code
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -41,7 +46,7 @@ export default function Home() {
           </p>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
             <a
               href="https://github.com/pass-with-high-score/blockads-android/releases"
               target="_blank"
@@ -59,6 +64,15 @@ export default function Home() {
             >
               <Download className="w-5 h-5" />
               IzzyOnDroid
+            </a>
+            <a
+              href="https://github.com/sponsors/pass-with-high-score"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 border border-pink-200 text-pink-600 bg-pink-50 font-medium rounded-2xl text-lg hover:bg-pink-100 transition-all flex items-center justify-center gap-2 shadow-sm shadow-pink-100"
+            >
+              <Heart className="w-5 h-5 fill-pink-500 text-pink-500" />
+              Sponsor Project
             </a>
           </div>
 
@@ -258,6 +272,103 @@ export default function Home() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Open Source & Community ─────────────────────── */}
+      <section id="open-source" className="py-24 px-6 border-t border-gray-100/50 bg-gray-50/50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Proudly Open Source
+            </h2>
+            <p className="text-gray-600 max-w-lg mx-auto">
+              BlockAds is transparent by design. Explore our source code, contribute, or support the project.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              {
+                title: "Android App",
+                desc: "The core DNS filter engine and Kotlin Multiplatform client.",
+                repo: "blockads-android",
+                link: "https://github.com/pass-with-high-score/blockads-android",
+                icon: Smartphone,
+                color: "text-blue-500",
+                bg: "bg-blue-50"
+              },
+              {
+                title: "Filter Compiler",
+                desc: "High-performance Go backend for building trie/bloom formats.",
+                repo: "blockads_filter_bin",
+                link: "https://github.com/pass-with-high-score/blockads_filter_bin",
+                icon: Database,
+                color: "text-purple-500",
+                bg: "bg-purple-50"
+              },
+              {
+                title: "Default Filters",
+                desc: "Auto-updating curated ad-blocking list repository.",
+                repo: "blockads-default-filter",
+                link: "https://github.com/pass-with-high-score/blockads-default-filter",
+                icon: ListFilter,
+                color: "text-[#00E676]",
+                bg: "bg-[#00E676]/10"
+              },
+              {
+                title: "Official Website",
+                desc: "The Next.js landing page and compiler dashboard you're viewing.",
+                repo: "blockads-website",
+                link: "https://github.com/pass-with-high-score/blockads-website",
+                icon: Globe,
+                color: "text-orange-500",
+                bg: "bg-orange-50"
+              }
+            ].map((repo) => (
+              <a
+                key={repo.title}
+                href={repo.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-6 rounded-3xl bg-white/80 border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all flex flex-col h-full shadow-sm"
+              >
+                <div className={`w-12 h-12 rounded-2xl ${repo.bg} flex items-center justify-center mb-5 group-hover:-translate-y-1 transition-transform`}>
+                  <repo.icon className={`w-6 h-6 ${repo.color}`} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{repo.title}</h3>
+                <p className="text-sm text-gray-500 mb-6 flex-grow">{repo.desc}</p>
+                <div className="flex items-center gap-2 text-xs font-mono text-gray-400 group-hover:text-gray-900 transition-colors mt-auto pt-4 border-t border-gray-100">
+                  <Github className="w-4 h-4" />
+                  {repo.repo}
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="max-w-3xl mx-auto sm:flex items-center justify-between p-8 rounded-[2rem] bg-gradient-to-br from-pink-50 to-orange-50 border border-pink-100 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8 opacity-10 blur-xl group-hover:opacity-20 transition-opacity pointer-events-none">
+              <Heart className="w-48 h-48 fill-pink-500 text-pink-500" />
+            </div>
+            <div className="relative z-10 mb-6 sm:mb-0">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+                <Heart className="w-6 h-6 text-pink-500 fill-pink-500 drop-shadow-sm" />
+                Support the Development
+              </h3>
+              <p className="text-gray-600 max-w-sm">
+                If BlockAds has made your mobile experience better, consider dropping a small sponsorship to help cover server and development costs.
+              </p>
+            </div>
+            <a
+              href="https://github.com/sponsors/pass-with-high-score"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-2xl hover:bg-gray-800 transition-all hover:-translate-y-1 shadow-md hover:shadow-xl"
+            >
+              <Heart className="w-5 h-5 text-pink-400 fill-pink-400" />
+              Sponsor Now
+            </a>
           </div>
         </div>
       </section>

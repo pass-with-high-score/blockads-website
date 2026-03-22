@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download, Loader2, Link2, Box, Calendar, Server, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Download, Loader2, Link2, Box, Calendar, Server, Search, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
 
 interface FilterRecord {
   id: number;
@@ -22,6 +22,13 @@ export default function RecentFilters() {
   const [totalPages, setTotalPages] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [copiedId, setCopiedId] = useState<number | null>(null);
+
+  const handleCopy = (id: number, url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -175,13 +182,22 @@ export default function RecentFilters() {
                     </div>
                   </div>
 
-                  <a
-                    href={filter.r2DownloadLink}
-                    title="Download Zip"
-                    className="p-2 bg-gray-50 text-gray-600 hover:bg-[#00E676] hover:text-black rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#00E676]"
-                  >
-                    <Download className="w-4 h-4" />
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleCopy(filter.id, filter.url)}
+                      title="Copy Filter Link"
+                      className="p-2 bg-gray-50 text-gray-600 hover:bg-blue-500 hover:text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
+                    >
+                      {copiedId === filter.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                    <a
+                      href={filter.r2DownloadLink}
+                      title="Download Zip"
+                      className="p-2 bg-gray-50 text-gray-600 hover:bg-[#00E676] hover:text-black rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#00E676]"
+                    >
+                      <Download className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
