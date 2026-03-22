@@ -292,7 +292,7 @@ export default function Home() {
             {[
               {
                 title: "Android App",
-                desc: "The core DNS filter engine and Kotlin Multiplatform client.",
+                desc: "The core DNS filter engine and Android client.",
                 repo: "blockads-android",
                 link: "https://github.com/pass-with-high-score/blockads-android",
                 icon: Smartphone,
