@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download, Loader2, Link2, Box, Calendar, Server, Search, ChevronLeft, ChevronRight, Copy, Check } from "lucide-react";
+import { Download, Loader2, Link2, Box, Calendar, Server, Search, ChevronLeft, ChevronRight, Copy, Check, ArrowUp, ArrowDown } from "lucide-react";
 
 interface FilterRecord {
   id: number;
@@ -23,6 +23,8 @@ export default function RecentFilters() {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [sortField, setSortField] = useState<"time" | "size" | "rule" | "name">("time");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const handleCopy = (id: number, url: string) => {
     navigator.clipboard.writeText(url);
@@ -50,6 +52,8 @@ export default function RecentFilters() {
         const params = new URLSearchParams({
           page: currentPage.toString(),
           limit: "10",
+          sort: sortField,
+          order: sortOrder,
         });
         if (searchQuery) {
           params.append("search", searchQuery);
@@ -85,7 +89,7 @@ export default function RecentFilters() {
     return () => {
       mounted = false;
     };
-  }, [currentPage, searchQuery]);
+  }, [currentPage, searchQuery, sortField, sortOrder]);
 
   const formatBytes = (bytes: number) => {
     if (!bytes) return '0 Bytes';
@@ -110,15 +114,42 @@ export default function RecentFilters() {
 
   return (
     <div className="space-y-6">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-        <input 
-          type="text"
-          placeholder="Search filter lists by name, url..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 focus:border-[#00E676] transition-all shadow-sm"
-        />
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-grow">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <input 
+            type="text"
+            placeholder="Search filter lists by name, url..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 focus:border-[#00E676] transition-all shadow-sm"
+          />
+        </div>
+        <div className="flex gap-2 shrink-0">
+          <select 
+            value={sortField}
+            onChange={(e) => {
+              setSortField(e.target.value as any);
+              setCurrentPage(1);
+            }}
+            className="px-4 py-3 bg-white border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#00E676]/50 focus:border-[#00E676] transition-all shadow-sm text-gray-700 font-medium cursor-pointer"
+          >
+            <option value="time">Latest updates</option>
+            <option value="name">Name</option>
+            <option value="rule">Rule count</option>
+            <option value="size">File size</option>
+          </select>
+          <button
+            onClick={() => {
+              setSortOrder(order => order === "asc" ? "desc" : "asc");
+              setCurrentPage(1);
+            }}
+            className="px-4 py-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 text-gray-700 transition-all shadow-sm flex items-center justify-center min-w-[3rem]"
+            title={sortOrder === "asc" ? "Ascending" : "Descending"}
+          >
+            {sortOrder === "asc" ? <ArrowUp className="w-5 h-5 text-gray-500" /> : <ArrowDown className="w-5 h-5 text-gray-500" />}
+          </button>
+        </div>
       </div>
 
       {isLoading ? (
