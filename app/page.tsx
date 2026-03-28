@@ -17,7 +17,10 @@ import {
   Globe,
   Database,
   ListFilter,
-  Code
+  Code,
+  RefreshCw,
+  Globe2,
+  LayoutGrid
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -41,8 +44,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed">
-            System-wide ad blocking for Android using smart DNS filtering. No
-            root required. No data collection. Just peace of mind.
+            System-wide ad blocking for Android using Local VPN or Root Proxy. Smart DNS filtering, zero data collection. Just peace of mind.
           </p>
 
           {/* CTA */}
@@ -89,8 +91,8 @@ export default function Home() {
             </div>
             <div className="hidden sm:block w-px h-8 bg-gray-200" />
             <div className="flex flex-col items-center">
-              <div className="text-2xl font-bold text-gray-900">No</div>
-              <div>Root needed</div>
+              <div className="text-2xl font-bold text-gray-900">Dual</div>
+              <div>Routing Modes</div>
             </div>
           </div>
         </div>
@@ -134,14 +136,14 @@ export default function Home() {
             },
             {
               step: "2",
-              title: "Allow VPN",
-              desc: "A local VPN is created to filter DNS queries.",
+              title: "Start Routing",
+              desc: "Use Local VPN or Root Proxy (iptables) to filter DNS.",
               icon: ShieldCheck,
             },
             {
               step: "3",
-              title: "Enjoy!",
-              desc: "Ads are blocked across all apps and browsers.",
+              title: "Enjoy Ad-Free",
+              desc: "Ads are blocked system-wide. No compromise.",
               icon: PartyPopper,
             },
           ].map((item) => (
@@ -176,47 +178,62 @@ export default function Home() {
             {
               icon: ShieldOff,
               title: "System-wide Blocking",
-              desc: "Block ads in every app and browser using DNS filtering.",
+              desc: "Block ads in every app and browser using Dual Routing (VPN/Root).",
             },
             {
               icon: Lock,
-              title: "Privacy Protection",
-              desc: "Block trackers and spyware. All data stays on your device.",
+              title: "Uncompromised Privacy",
+              desc: "Block trackers and phishing. 100% local — data stays on your device.",
             },
             {
-              icon: BarChart3,
-              title: "Real-time Stats",
-              desc: "24-hour activity chart, blocked count, and detailed DNS logs.",
+              icon: Globe2,
+              title: "Advanced DNS & DoH",
+              desc: "DNS-over-HTTPS support and HTTPS filtering (Beta) for ultimate privacy.",
+            },
+            {
+              icon: LayoutGrid,
+              title: "Per-App Filtering",
+              desc: "Easily bypass the ad blocker for selected apps that might break.",
             },
             {
               icon: Settings,
-              title: "Multiple Filter Lists",
-              desc: "ABPVN, AdGuard DNS, EasyList, and custom URL support.",
+              title: "Built-in Filter Lists",
+              desc: "StevenBlack, AdGuard DNS, EasyList. Region-aware defaults based on your language.",
+            },
+            {
+              icon: RefreshCw,
+              title: "Auto-updates & Sync",
+              desc: "Auto-update filter lists on schedule. Auto-reconnect on device boot.",
+            },
+            {
+              icon: BarChart3,
+              title: "Comprehensive Logging",
+              desc: "Real-time DNS query logs with search, filtering, and optional export.",
             },
             {
               icon: Palette,
-              title: "Modern UI",
-              desc: "Material 3 design with Dark, Light, and System themes.",
+              title: "Dynamic Material 3",
+              desc: "Dark / Light themes with 7 accent colors and Material You support.",
             },
             {
               icon: Zap,
-              title: "Quick Settings Tile",
-              desc: "Toggle protection from the notification shade instantly.",
+              title: "Widgets & Quick Tile",
+              desc: "Instantly toggle protection from your home screen or notification shade.",
             },
             {
-              icon: Save,
-              title: "Backup & Restore",
-              desc: "Export settings to JSON and restore on any device.",
+              icon: Code,
+              title: "Custom Rules & Backup",
+              desc: "Add your own block/allow rules and export config to JSON.",
             },
             {
               icon: Battery,
               title: "Battery Friendly",
-              desc: "Only filters DNS packets — minimal battery impact.",
+              desc: "Only filters DNS packets locally. Zero background battery drain.",
             },
             {
               icon: Gift,
-              title: "Free Forever",
-              desc: "No ads, no in-app purchases, no subscriptions. Ever.",
+              title: "Free & Open Source",
+              desc: "No ads inside, no subscriptions. Transparent by design.",
             },
           ].map((feature) => (
             <div
@@ -251,7 +268,7 @@ export default function Home() {
               },
               {
                 q: "Why does it need VPN permission?",
-                a: "A local VPN tunnel is created on your device to intercept DNS requests. No data leaves your phone.",
+                a: "For non-root devices, a local VPN tunnel intercepts DNS requests. If your device is rooted, you can use the Root Proxy Mode (iptables) instead.",
               },
               {
                 q: "Does it work with all apps?",

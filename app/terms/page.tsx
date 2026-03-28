@@ -10,7 +10,7 @@ export default function TermsOfService() {
         <div className="max-w-3xl mx-auto px-6 py-20">
             <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
             <p className="text-sm text-[#8888a0] mb-10">
-                Last updated: February 10, 2025
+                Last updated: March 28, 2026
             </p>
 
             <div className="legal-content">
@@ -24,9 +24,9 @@ export default function TermsOfService() {
                 <h2>2. Description of Service</h2>
                 <p>
                     BlockAds is a free, open-source ad blocker for Android that uses
-                    VPN-based DNS filtering to block advertisements and trackers. The App
-                    creates a local VPN tunnel on your device to intercept and filter DNS
-                    queries. No internet traffic is routed through external servers.
+                    smart DNS filtering to block advertisements and trackers. The App
+                    can operate by creating a local VPN tunnel or by utilizing Root Proxy (iptables) on rooted devices to intercept and filter DNS
+                    queries. In either mode, no internet traffic is routed through external servers.
                 </p>
 
                 <h2>3. License</h2>
@@ -50,20 +50,17 @@ export default function TermsOfService() {
                     </li>
                 </ul>
 
-                <h2>5. VPN Permission</h2>
+                <h2>5. Permissions (VPN & Root)</h2>
                 <p>
-                    The App requires Android VPN permission to function. By granting this
-                    permission, you acknowledge that:
+                    Depending on your chosen routing mode, the App requires either Android VPN permission or Root access to function. By granting these permissions, you acknowledge that:
                 </p>
                 <ul>
                     <li>
-                        The VPN is created locally on your device for DNS filtering purposes
-                        only
+                        The VPN or Root Proxy is created/configured locally on your device for DNS filtering purposes only.
                     </li>
-                    <li>No traffic is routed through external servers</li>
+                    <li>No traffic is routed through external servers.</li>
                     <li>
-                        Only one VPN connection can be active at a time on Android —
-                        activating BlockAds will disconnect any other active VPN
+                        When using VPN mode, only one VPN connection can be active at a time on Android. Activating BlockAds will disconnect any other active VPN.
                     </li>
                 </ul>
 
@@ -77,7 +74,12 @@ export default function TermsOfService() {
                     blocked (false negatives).
                 </p>
 
-                <h2>7. Disclaimer of Warranties</h2>
+                <h2>7. Beta Features & Third-Party Configurations</h2>
+                <p>
+                    Certain features such as HTTPS Filtering (Beta), custom WireGuard endpoints, or DNS-over-HTTPS (DoH) providers are provided &quot;as-is&quot;. Using them might require installing a local cryptographic certificate or communicating with third-party endpoints. You are responsible for ensuring that you trust the providers or endpoints you configure.
+                </p>
+
+                <h2>8. Disclaimer of Warranties</h2>
                 <p>
                     THE APP IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot;
                     WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING
@@ -94,7 +96,7 @@ export default function TermsOfService() {
                     </li>
                 </ul>
 
-                <h2>8. Limitation of Liability</h2>
+                <h2>9. Limitation of Liability</h2>
                 <p>
                     TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE DEVELOPERS OF BLOCKADS
                     SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
@@ -105,19 +107,19 @@ export default function TermsOfService() {
                     <li>Loss of data or revenue</li>
                     <li>Inability to access certain websites or services</li>
                     <li>
-                        Any issues caused by third-party filter lists or DNS configurations
+                        Any issues caused by third-party filter lists, beta features, or custom configurations
                     </li>
                     <li>Device performance or battery consumption</li>
                 </ul>
 
-                <h2>9. Third-Party Content</h2>
+                <h2>10. Third-Party Content</h2>
                 <p>
                     The App may interact with third-party content through filter list
-                    downloads and DNS resolution. We are not responsible for the content,
+                    downloads and external DNS points. We are not responsible for the content,
                     policies, or practices of any third-party services.
                 </p>
 
-                <h2>10. Modifications</h2>
+                <h2>11. Modifications</h2>
                 <p>
                     We reserve the right to modify these Terms at any time. Changes will be
                     posted on this page with an updated &quot;Last updated&quot; date. Your
@@ -125,19 +127,19 @@ export default function TermsOfService() {
                     the modified Terms.
                 </p>
 
-                <h2>11. Termination</h2>
+                <h2>12. Termination</h2>
                 <p>
                     You may stop using the App at any time by uninstalling it from your
                     device. All locally stored data will be removed upon uninstallation.
                 </p>
 
-                <h2>12. Governing Law</h2>
+                <h2>13. Governing Law</h2>
                 <p>
                     These Terms shall be governed by and construed in accordance with the
                     laws of Vietnam, without regard to its conflict of law provisions.
                 </p>
 
-                <h2>13. Contact</h2>
+                <h2>14. Contact</h2>
                 <p>
                     If you have any questions about these Terms, please contact us at:
                 </p>

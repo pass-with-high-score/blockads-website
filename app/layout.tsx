@@ -12,13 +12,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BlockAds – Free Ad Blocker for Android | No Root",
+  title: "BlockAds – Free Ad Blocker for Android | Dual Routing",
   icons: {
     icon: "/favicon.svg",
     apple: "/favicon.svg",
   },
   description:
-    "Protect your privacy with BlockAds. Block ads and trackers system-wide on Android using smart DNS filtering. No root needed, 100% free, and open source.",
+    "Protect your privacy with BlockAds. Block ads system-wide on Android using Local VPN or Root Proxy (iptables). 100% free, open source, and privacy-first.",
   metadataBase: new URL("https://blockads.pwhs.app/"),
   keywords: [
     "ad blocker",
@@ -27,10 +27,15 @@ export const metadata: Metadata = {
     "dns filter",
     "privacy",
     "no root",
+    "root proxy",
+    "iptables",
+    "wireguard",
+    "https filtering",
+    "dns-over-https",
+    "doh",
+    "system-wide adblock",
     "free",
     "open source",
-    "tracker blocker",
-    "system-wide adblock",
   ],
   authors: [{ name: "pass-with-high-score" }],
   creator: "pass-with-high-score",
@@ -39,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "BlockAds – Free System-Wide Ad Blocker for Android",
     description:
-      "Block ads system-wide. No root required. DNS filtering to protect your privacy. Free & open source!",
+      "Block ads system-wide via Local VPN or Root Proxy. Smart DNS filtering, DoH support, and strict privacy protection. Free & open source!",
     url: "https://blockads.pwhs.app/",
     siteName: "BlockAds",
     images: [
@@ -57,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BlockAds – Free Ad Blocker for Android",
     description:
-      "Block ads system-wide. No root required. DNS filtering to protect your privacy. Free & open source!",
+      "Block ads system-wide via Local VPN or Root Proxy. Smart DNS filtering, DoH support, and strict privacy protection. Free & open source!",
     images: ["/1.jpg"],
   },
 };

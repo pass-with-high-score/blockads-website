@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
         <div className="max-w-3xl mx-auto px-6 py-20">
             <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
             <p className="text-sm text-[#8888a0] mb-10">
-                Last updated: February 10, 2025
+                Last updated: March 28, 2026
             </p>
 
             <div className="legal-content">
@@ -30,8 +30,8 @@ export default function PrivacyPolicy() {
                     <li>Device identifiers or advertising IDs</li>
                     <li>Location data</li>
                     <li>Browsing history</li>
-                    <li>Usage analytics or telemetry</li>
-                    <li>Any data transmitted to external servers</li>
+                    <li>Usage analytics or telemetry (unless explicitly opted-in)</li>
+                    <li>Any data transmitted to external servers without your consent</li>
                 </ul>
 
                 <h3>2.2 Data Stored Locally</h3>
@@ -54,26 +54,27 @@ export default function PrivacyPolicy() {
                         <strong>Filter Lists:</strong> Cached copies of ad-blocking filter
                         lists downloaded from public sources.
                     </li>
+                    <li>
+                        <strong>Crash Reports & Logs:</strong> If you manually export local logs or explicitly opt-in to telemetry during onboarding, anonymized crash logs may be sent to help us improve the app.
+                    </li>
                 </ul>
 
-                <h2>3. VPN Service</h2>
+                <h2>3. Dual Routing Modes (VPN & Root Proxy)</h2>
                 <p>
-                    BlockAds uses Android&apos;s VPN Service to create a{" "}
-                    <strong>local VPN tunnel</strong> on your device. This is necessary to
-                    intercept and filter DNS queries.
+                    BlockAds offers two routing modes to filter DNS queries: a <strong>local VPN tunnel</strong> and a <strong>Root Proxy (iptables)</strong>.
                 </p>
                 <ul>
                     <li>
-                        The VPN tunnel is <strong>entirely local</strong> — it does not route
-                        your traffic through any external server.
+                        <strong>VPN Mode:</strong> Creates a local VPN tunnel. It does not route your traffic through any external server.
                     </li>
                     <li>
-                        Only DNS traffic (port 53) is intercepted. All other internet
-                        traffic passes through normally.
+                        <strong>Root Proxy Mode:</strong> Uses iptables to redirect DNS traffic directly, requiring Root access but no VPN interface.
                     </li>
                     <li>
-                        No internet traffic content is logged, inspected, modified, or
-                        transmitted.
+                        In both modes, only DNS traffic (port 53) and optionally HTTPS/DoH is intercepted locally. All other internet traffic passes through normally.
+                    </li>
+                    <li>
+                        No internet traffic content is logged, inspected, modified, or transmitted externally.
                     </li>
                 </ul>
 
@@ -87,17 +88,27 @@ export default function PrivacyPolicy() {
 
                 <h2>5. Third-Party Services</h2>
                 <p>
-                    BlockAds does <strong>not</strong> integrate any third-party services
-                    such as:
+                    BlockAds generally does <strong>not</strong> integrate mandatory third-party tracking services. However:
                 </p>
                 <ul>
-                    <li>Analytics SDKs (Google Analytics, Firebase, etc.)</li>
-                    <li>Advertising SDKs</li>
-                    <li>Crash reporting services</li>
-                    <li>Social media trackers</li>
+                    <li><strong>Crash reporting services:</strong> Only enabled if you explicitly opt-in. We prioritize your privacy above all.</li>
+                    <li>We emphatically do not use Advertising SDKs or Social media trackers.</li>
                 </ul>
 
-                <h2>6. Data Retention & Deletion</h2>
+                <h2>6. Advanced Features (HTTPS & WireGuard)</h2>
+                <p>
+                    We offer advanced features such as HTTPS Filtering (Beta) and WireGuard profile imports:
+                </p>
+                <ul>
+                    <li>
+                        <strong>HTTPS Filtering:</strong> This feature may install a local certificate to inspect encrypted traffic for ad blocking purposes. All inspection happens 100% locally on your device.
+                    </li>
+                    <li>
+                        <strong>WireGuard Imports:</strong> Custom VPN profiles are stored locally and only used to establish connection to your specified endpoint.
+                    </li>
+                </ul>
+
+                <h2>7. Data Retention & Deletion</h2>
                 <p>
                     All data is stored locally on your device. You can delete all stored
                     data at any time through:
@@ -111,13 +122,13 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
 
-                <h2>7. Children&apos;s Privacy</h2>
+                <h2>8. Children&apos;s Privacy</h2>
                 <p>
                     BlockAds is not directed at children under the age of 13. We do not
                     knowingly collect any personal information from children.
                 </p>
 
-                <h2>8. Export & Import</h2>
+                <h2>9. Export & Import</h2>
                 <p>
                     The app allows you to export your settings to a JSON file and import
                     them on another device. This file is created and managed entirely by
@@ -126,14 +137,14 @@ export default function PrivacyPolicy() {
                     apps/domains).
                 </p>
 
-                <h2>9. Changes to This Policy</h2>
+                <h2>10. Changes to This Policy</h2>
                 <p>
                     We may update this Privacy Policy from time to time. The updated
                     version will be posted on this page with a revised &quot;Last
                     updated&quot; date. We encourage you to review this page periodically.
                 </p>
 
-                <h2>10. Contact Us</h2>
+                <h2>11. Contact Us</h2>
                 <p>
                     If you have any questions about this Privacy Policy, please contact us
                     at:
