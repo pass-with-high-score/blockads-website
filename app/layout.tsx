@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "BlockAds",
     images: [
       {
-        url: "/1.jpg", 
+        url: "/1.png",
         width: 1200,
         height: 630,
         alt: "BlockAds App Home Screen",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     title: "BlockAds – Free Ad Blocker for Android",
     description:
       "Block ads system-wide via Local VPN or Root Proxy. Smart DNS filtering, DoH support, and strict privacy protection. Free & open source!",
-    images: ["/1.jpg"],
+    images: ["/1.png"],
   },
 };
 
