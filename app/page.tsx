@@ -103,13 +103,13 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group">
-              <Image src="/1.jpg" alt="Home Screen" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <Image src="/1.png" alt="Home Screen" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
             </div>
             <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group md:-translate-y-8">
-              <Image src="/2.jpg" alt="Filter Lists" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <Image src="/2.png" alt="Filter Lists" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
             </div>
             <div className="relative aspect-[9/19] w-full max-w-[300px] mx-auto rounded-[2rem] overflow-hidden border-[6px] border-gray-900 shadow-2xl group">
-              <Image src="/3.jpg" alt="Settings" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <Image src="/3.png" alt="Settings" fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
             </div>
           </div>
         </div>
