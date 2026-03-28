@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import MobileNav from "./components/MobileNav";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -184,6 +185,7 @@ export default function RootLayout({
         <main className="pt-16">{children}</main>
         <Footer />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
