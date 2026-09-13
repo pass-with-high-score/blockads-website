@@ -212,7 +212,7 @@ async function executeTool(name: string, args: Record<string, unknown>) {
       if (status === "all") {
         if (category) {
           rows = await sql`
-            SELECT id, url, category, routing_mode, description, contact, status, created_at
+            SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
             FROM website_reports
             WHERE category = ${category}
             ORDER BY created_at DESC
@@ -220,7 +220,7 @@ async function executeTool(name: string, args: Record<string, unknown>) {
           `;
         } else {
           rows = await sql`
-            SELECT id, url, category, routing_mode, description, contact, status, created_at
+            SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
             FROM website_reports
             ORDER BY created_at DESC
             LIMIT ${limit} OFFSET ${offset}
@@ -229,7 +229,7 @@ async function executeTool(name: string, args: Record<string, unknown>) {
       } else {
         if (category) {
           rows = await sql`
-            SELECT id, url, category, routing_mode, description, contact, status, created_at
+            SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
             FROM website_reports
             WHERE status = ${status} AND category = ${category}
             ORDER BY created_at DESC
@@ -237,7 +237,7 @@ async function executeTool(name: string, args: Record<string, unknown>) {
           `;
         } else {
           rows = await sql`
-            SELECT id, url, category, routing_mode, description, contact, status, created_at
+            SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
             FROM website_reports
             WHERE status = ${status}
             ORDER BY created_at DESC
@@ -261,7 +261,7 @@ async function executeTool(name: string, args: Record<string, unknown>) {
       const searchPattern = `%${query}%`;
 
       const rows = await sql`
-        SELECT id, url, category, routing_mode, description, contact, status, created_at
+        SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
         FROM website_reports
         WHERE url ILIKE ${searchPattern} OR description ILIKE ${searchPattern}
         ORDER BY created_at DESC

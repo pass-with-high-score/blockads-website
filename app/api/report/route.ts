@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
+import { uploadScreenshotToR2 } from "@/lib/r2";
 
 function escapeHtml(text: string): string {
   return text
@@ -11,8 +12,48 @@ function escapeHtml(text: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { url, category, description, routingMode, contact, honeypot } = body;
+    let url = "";
+    let category = "ads_not_blocked";
+    let routingMode = "Local VPN";
+    let description = "";
+    let contact = "";
+    let honeypot = "";
+    let screenshotUrl: string | null = null;
+
+    const contentType = req.headers.get("content-type") || "";
+
+    if (contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+      url = (formData.get("url") as string) || "";
+      category = (formData.get("category") as string) || "ads_not_blocked";
+      routingMode = (formData.get("routingMode") as string) || "Local VPN";
+      description = (formData.get("description") as string) || "";
+      contact = (formData.get("contact") as string) || "";
+      honeypot = (formData.get("honeypot") as string) || "";
+
+      const screenshotFile = formData.get("screenshot") as File | null;
+      if (screenshotFile && screenshotFile.size > 0) {
+        // Validate file type & size (max 8MB)
+        if (screenshotFile.size <= 8 * 1024 * 1024 && screenshotFile.type.startsWith("image/")) {
+          const arrayBuffer = await screenshotFile.arrayBuffer();
+          const buffer = Buffer.from(arrayBuffer);
+          screenshotUrl = await uploadScreenshotToR2(
+            buffer,
+            screenshotFile.type,
+            screenshotFile.name
+          );
+        }
+      }
+    } else {
+      const body = await req.json();
+      url = body.url || "";
+      category = body.category || "ads_not_blocked";
+      routingMode = body.routingMode || "Local VPN";
+      description = body.description || "";
+      contact = body.contact || "";
+      honeypot = body.honeypot || "";
+      screenshotUrl = body.screenshotUrl || null;
+    }
 
     // Honeypot spam check
     if (honeypot) {
@@ -61,7 +102,8 @@ export async function POST(req: NextRequest) {
           contact,
           ip,
           user_agent,
-          status
+          status,
+          screenshot_url
         ) VALUES (
           ${normalizedUrl},
           ${category || "other"},
@@ -70,7 +112,8 @@ export async function POST(req: NextRequest) {
           ${cleanContact},
           ${ip},
           ${userAgent},
-          'pending'
+          'pending',
+          ${screenshotUrl}
         )
         RETURNING id
       `;
@@ -79,7 +122,6 @@ export async function POST(req: NextRequest) {
       }
     } catch (dbError) {
       console.error("Failed to save report to Supabase:", dbError);
-      // We still continue to attempt sending the Telegram message
     }
 
     // 2. Dispatch notification to Telegram
@@ -92,6 +134,9 @@ export async function POST(req: NextRequest) {
     const descHtml = cleanDesc ? escapeHtml(cleanDesc) : "<i>No description provided</i>";
     const contactHtml = cleanContact ? escapeHtml(cleanContact) : "<i>Anonymous</i>";
     const reportRef = reportId ? `\n🆔 <b>Report ID:</b> <code>#${escapeHtml(reportId.slice(0, 8))}</code>` : "";
+    const screenshotRef = screenshotUrl
+      ? `\n📷 <b>Screenshot:</b> <a href="${escapeHtml(screenshotUrl)}">View Image on R2</a>`
+      : "";
 
     const messageHtml = [
       `🛡 <b>NEW WEBSITE REPORT (BLOCKADS)</b>${reportRef}`,
@@ -100,7 +145,7 @@ export async function POST(req: NextRequest) {
       `📌 <b>Issue:</b> ${escapeHtml(categoryText)}`,
       `⚙️ <b>Routing Mode:</b> ${escapeHtml(modeText)}`,
       `📝 <b>Description:</b>\n${descHtml}`,
-      `👤 <b>Contact:</b> ${contactHtml}`,
+      `👤 <b>Contact:</b> ${contactHtml}${screenshotRef}`,
       `━━━━━━━━━━━━━━━━━━━━`,
       `🕒 <b>Timestamp:</b> <code>${escapeHtml(timestamp)}</code>`,
       `📱 <b>Device/Browser:</b> <code>${escapeHtml(userAgent.slice(0, 150))}</code>`,
@@ -111,32 +156,57 @@ export async function POST(req: NextRequest) {
     const chatId = process.env.TELEGRAM_REPORT_CHAT_ID;
 
     if (botToken && chatId) {
-      const telegramEndpoint = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-    try {
-      const telegramRes = await fetch(telegramEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: messageHtml,
-          parse_mode: "HTML",
-          disable_web_page_preview: false,
-        }),
-      });
-
-      const telegramData = await telegramRes.json();
-      if (!telegramRes.ok || !telegramData.ok) {
-        console.error("Telegram API response error:", telegramData);
+      // If there is a screenshot, sendPhoto first; if caption is short enough or fallback to sendMessage
+      let sentPhoto = false;
+      if (screenshotUrl && messageHtml.length <= 1024) {
+        try {
+          const photoRes = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              photo: screenshotUrl,
+              caption: messageHtml,
+              parse_mode: "HTML",
+            }),
+          });
+          const photoData = await photoRes.json();
+          if (photoRes.ok && photoData.ok) {
+            sentPhoto = true;
+          }
+        } catch (photoErr) {
+          console.error("Failed to sendPhoto to Telegram:", photoErr);
+        }
       }
-      } catch (telegramErr) {
-        console.error("Failed to forward report to Telegram:", telegramErr);
+
+      // If photo wasn't sent (or caption exceeded 1024 chars), send standard text message
+      if (!sentPhoto) {
+        try {
+          const telegramRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: messageHtml,
+              parse_mode: "HTML",
+              disable_web_page_preview: false,
+            }),
+          });
+
+          const telegramData = await telegramRes.json();
+          if (!telegramRes.ok || !telegramData.ok) {
+            console.error("Telegram API response error:", telegramData);
+          }
+        } catch (telegramErr) {
+          console.error("Failed to forward report to Telegram:", telegramErr);
+        }
       }
     }
 
     return NextResponse.json({
       success: true,
       reportId,
+      screenshotUrl,
       message: "Your report has been submitted successfully. Thank you!",
     });
   } catch (error: unknown) {
@@ -166,7 +236,7 @@ export async function GET(req: NextRequest) {
     if (searchPattern) {
       if (status === "all") {
         reports = await sql`
-          SELECT id, url, category, routing_mode, description, contact, status, created_at
+          SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
           FROM website_reports
           WHERE url ILIKE ${searchPattern} OR description ILIKE ${searchPattern}
           ORDER BY created_at DESC
@@ -180,7 +250,7 @@ export async function GET(req: NextRequest) {
         totalCount = countRow?.count || 0;
       } else {
         reports = await sql`
-          SELECT id, url, category, routing_mode, description, contact, status, created_at
+          SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
           FROM website_reports
           WHERE status = ${status} AND (url ILIKE ${searchPattern} OR description ILIKE ${searchPattern})
           ORDER BY created_at DESC
@@ -196,7 +266,7 @@ export async function GET(req: NextRequest) {
     } else {
       if (status === "all") {
         reports = await sql`
-          SELECT id, url, category, routing_mode, description, contact, status, created_at
+          SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
           FROM website_reports
           ORDER BY created_at DESC
           LIMIT ${limit} OFFSET ${offset}
@@ -205,7 +275,7 @@ export async function GET(req: NextRequest) {
         totalCount = countRow?.count || 0;
       } else {
         reports = await sql`
-          SELECT id, url, category, routing_mode, description, contact, status, created_at
+          SELECT id, url, category, routing_mode, description, contact, status, screenshot_url, created_at
           FROM website_reports
           WHERE status = ${status}
           ORDER BY created_at DESC

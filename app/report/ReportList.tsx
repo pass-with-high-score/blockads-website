@@ -17,6 +17,8 @@ import {
   SlidersHorizontal,
   ChevronDown,
   ChevronUp,
+  Image as ImageIcon,
+  X,
 } from "lucide-react";
 
 interface ReportItem {
@@ -26,6 +28,7 @@ interface ReportItem {
   routing_mode: string | null;
   description: string | null;
   contact: string | null;
+  screenshot_url?: string | null;
   status: string;
   created_at: string;
 }
@@ -72,6 +75,7 @@ export default function ReportList() {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Debounce search
   useEffect(() => {
@@ -318,6 +322,19 @@ export default function ReportList() {
                       </span>
                     )}
 
+                    {/* Screenshot Proof Button */}
+                    {report.screenshot_url && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedImage(report.screenshot_url || null)}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#00C853] border border-emerald-200/80 font-medium transition-colors cursor-pointer"
+                        title="View screenshot proof"
+                      >
+                        <ImageIcon className="w-3 h-3" />
+                        Screenshot
+                      </button>
+                    )}
+
                     {/* Contact (if user provided) */}
                     {report.contact && (
                       <span className="text-gray-500">
@@ -434,6 +451,52 @@ export default function ReportList() {
           </div>
         )}
       </div>
+
+      {/* Screenshot Lightbox Modal */}
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl max-h-[90vh] bg-white rounded-3xl p-3 shadow-2xl overflow-hidden flex flex-col w-full"
+          >
+            <div className="flex items-center justify-between pb-3 px-2 border-b border-gray-100">
+              <span className="text-sm font-semibold text-gray-800 flex items-center gap-1.5">
+                <ImageIcon className="w-4 h-4 text-[#00C853]" />
+                Screenshot Proof
+              </span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={selectedImage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 text-gray-500 hover:text-gray-800 rounded-lg hover:bg-gray-100 transition-colors"
+                  title="Open original in new tab"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setSelectedImage(null)}
+                  className="p-1.5 text-gray-500 hover:text-gray-800 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                  title="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+            <div className="relative mt-2 max-h-[75vh] overflow-auto rounded-2xl flex items-center justify-center bg-gray-50 p-2">
+              <img
+                src={selectedImage}
+                alt="Screenshot proof"
+                className="w-auto h-auto max-h-[70vh] rounded-xl object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
