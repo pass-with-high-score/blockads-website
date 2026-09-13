@@ -79,12 +79,14 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Authorization check: Only authorized admin (e.g. 1578783338 or TELEGRAM_REPORT_CHAT_ID) can access
+// Authorization check: Only authorized admin (e.g. 1578783338, group -1003728420340, or TELEGRAM_REPORT_CHAT_ID) can access
 function isAuthorizedUser(userId?: number | string, chatId?: number | string): boolean {
   const allowed = new Set(
     [
       process.env.TELEGRAM_REPORT_CHAT_ID,
+      process.env.TELEGRAM_DAILY_STATS_CHAT_ID,
       "1578783338",
+      "-1003728420340",
       ...(process.env.TELEGRAM_ADMIN_IDS ? process.env.TELEGRAM_ADMIN_IDS.split(",") : []),
     ]
       .filter(Boolean)
@@ -506,6 +508,39 @@ async function handleCallbackQuery(cb: {
   const data = cb.data;
   if (!data) {
     await answerTelegramCallbackQuery(cb.id);
+    return;
+  }
+
+  // Quick view pending reports from daily stats
+  if (data === "reports_pending") {
+    const query = await sql`
+      SELECT id, url, category, routing_mode, description, contact, status, created_at
+      FROM website_reports
+      WHERE status = 'pending'
+      ORDER BY created_at DESC
+      LIMIT 5
+    `;
+
+    if (query.length === 0) {
+      await answerTelegramCallbackQuery(cb.id, "No pending reports at the moment! 🎉", true);
+      return;
+    }
+
+    const rowsText = query.map((r, i) => {
+      const sId = r.id.slice(0, 8);
+      const domain = r.url.replace(/^https?:\/\//i, "").split("/")[0];
+      return `<b>${i + 1}.</b> <code>#${sId}</code> - <a href="${escapeHtml(r.url)}">${escapeHtml(domain)}</a>\n👉 <code>/get ${sId}</code> | <code>/resolve ${sId}</code>`;
+    }).join("\n\n");
+
+    if (cb.message?.chat.id) {
+      await sendTelegramMessage(
+        cb.message.chat.id,
+        `⏳ <b>RECENT PENDING REPORTS</b>\n━━━━━━━━━━━━━━━━━━━━\n${rowsText}`,
+        undefined,
+        cb.message.message_id
+      );
+    }
+    await answerTelegramCallbackQuery(cb.id, `Loaded ${query.length} pending reports`);
     return;
   }
 
