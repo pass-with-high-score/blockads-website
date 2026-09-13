@@ -1,0 +1,15 @@
+{
+  "name": "blockads-reports-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.mjs",
+  "scripts": {
+    "build": "bun build src/index.ts --target=node --outfile=dist/index.mjs",
+    "start": "node dist/index.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "postgres": "^3.4.9",
+    "zod": "^4.6.4"
+  }
+}

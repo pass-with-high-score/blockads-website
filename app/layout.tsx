@@ -92,6 +92,12 @@ function Navbar() {
           >
             Compiler
           </Link>
+          <Link
+            href="/report"
+            className="hover:text-[#00E676] transition-colors font-medium text-gray-800"
+          >
+            Report Site
+          </Link>
           <Link href="/privacy" className="hover:text-gray-900 transition-colors">
             Privacy
           </Link>
@@ -120,7 +126,7 @@ function Footer() {
   return (
     <footer className="border-t border-gray-200 py-12 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image src="/icon.svg" alt="BlockAds" width={28} height={28} className="rounded-lg" />
@@ -139,6 +145,12 @@ function Footer() {
             <div className="flex flex-col gap-2 text-sm text-gray-600">
               <Link href="/" className="hover:text-gray-900 transition-colors">
                 Home
+              </Link>
+              <Link href="/report" className="hover:text-[#00E676] transition-colors font-medium text-gray-900">
+                Report Website
+              </Link>
+              <Link href="/compiler" className="hover:text-gray-900 transition-colors">
+                Filter Compiler
               </Link>
               <Link
                 href="/privacy"
