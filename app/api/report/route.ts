@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
 import { uploadScreenshotToR2 } from "@/lib/r2";
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
+import { escapeHtml, getReportActionKeyboard } from "@/lib/telegram";
 
 export async function POST(req: NextRequest) {
   try {
@@ -156,6 +149,8 @@ export async function POST(req: NextRequest) {
     const chatId = process.env.TELEGRAM_REPORT_CHAT_ID;
 
     if (botToken && chatId) {
+      const keyboard = reportId ? getReportActionKeyboard(reportId, normalizedUrl, "pending") : undefined;
+
       // If there is a screenshot, sendPhoto first; if caption is short enough or fallback to sendMessage
       let sentPhoto = false;
       if (screenshotUrl && messageHtml.length <= 1024) {
@@ -168,6 +163,7 @@ export async function POST(req: NextRequest) {
               photo: screenshotUrl,
               caption: messageHtml,
               parse_mode: "HTML",
+              reply_markup: keyboard,
             }),
           });
           const photoData = await photoRes.json();
@@ -190,6 +186,7 @@ export async function POST(req: NextRequest) {
               text: messageHtml,
               parse_mode: "HTML",
               disable_web_page_preview: false,
+              reply_markup: keyboard,
             }),
           });
 
