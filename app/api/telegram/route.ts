@@ -79,6 +79,24 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// Authorization check: Only authorized admin (e.g. 1578783338 or TELEGRAM_REPORT_CHAT_ID) can access
+function isAuthorizedUser(userId?: number | string, chatId?: number | string): boolean {
+  const allowed = new Set(
+    [
+      process.env.TELEGRAM_REPORT_CHAT_ID,
+      "1578783338",
+      ...(process.env.TELEGRAM_ADMIN_IDS ? process.env.TELEGRAM_ADMIN_IDS.split(",") : []),
+    ]
+      .filter(Boolean)
+      .map((id) => String(id).trim())
+  );
+
+  return Boolean(
+    (userId && allowed.has(String(userId))) ||
+    (chatId && allowed.has(String(chatId)))
+  );
+}
+
 // --- Handler: Message Commands ---
 async function handleMessage(message: {
   chat: { id: number };
@@ -87,7 +105,19 @@ async function handleMessage(message: {
   text: string;
 }) {
   const chatId = message.chat.id;
+  const senderId = message.from?.id;
   const rawText = message.text.trim();
+
+  // Access control: Only user 1578783338 / admin chat can access
+  if (!isAuthorizedUser(senderId, chatId)) {
+    await sendTelegramMessage(
+      chatId,
+      `⛔️ <b>Truy cập bị từ chối</b>\n━━━━━━━━━━━━━━━━━━━━\nBạn không có quyền sử dụng bot quản trị BlockAds.\n🆔 ID của bạn: <code>${senderId || chatId}</code>`,
+      undefined,
+      message.message_id
+    );
+    return;
+  }
 
   // Parse command & arguments (e.g. "/reports pending" or "/resolve@MyBot 1a2b3c4d")
   const parts = rawText.split(/\s+/);
@@ -464,6 +494,15 @@ async function handleCallbackQuery(cb: {
     text?: string;
   };
 }) {
+  const senderId = cb.from?.id;
+  const chatId = cb.message?.chat.id;
+
+  // Access control: Only user 1578783338 / admin chat can perform inline actions
+  if (!isAuthorizedUser(senderId, chatId)) {
+    await answerTelegramCallbackQuery(cb.id, "⛔️ Bạn không có quyền thực hiện thao tác này.", true);
+    return;
+  }
+
   const data = cb.data;
   if (!data) {
     await answerTelegramCallbackQuery(cb.id);
