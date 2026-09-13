@@ -112,7 +112,7 @@ async function handleMessage(message: {
   if (!isAuthorizedUser(senderId, chatId)) {
     await sendTelegramMessage(
       chatId,
-      `⛔️ <b>Truy cập bị từ chối</b>\n━━━━━━━━━━━━━━━━━━━━\nBạn không có quyền sử dụng bot quản trị BlockAds.\n🆔 ID của bạn: <code>${senderId || chatId}</code>`,
+      `⛔️ <b>Access Denied</b>\n━━━━━━━━━━━━━━━━━━━━\nYou do not have permission to use the BlockAds Admin Bot.\n🆔 Your ID: <code>${senderId || chatId}</code>`,
       undefined,
       message.message_id
     );
@@ -131,21 +131,21 @@ async function handleMessage(message: {
       const helpText = [
         `🛡 <b>BlockAds Report Bot - Commands</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `📋 <b>Quản lý báo cáo:</b>`,
-        `• <code>/reports [status]</code> : Danh sách report mới nhất (<i>pending, resolved, ignored, all</i>). Mặc định: <i>pending</i>`,
-        `• <code>/stats</code> : Thống kê tổng quan và top domain bị báo cáo`,
-        `• <code>/search &lt;từ khóa&gt;</code> : Tìm báo cáo theo domain hoặc nội dung`,
-        `• <code>/get &lt;id&gt;</code> : Xem chi tiết report (kèm ảnh chụp màn hình)`,
+        `📋 <b>Report Management:</b>`,
+        `• <code>/reports [status]</code> : List recent reports (<i>pending, resolved, ignored, all</i>). Default: <i>pending</i>`,
+        `• <code>/stats</code> : Overview statistics & top reported domains`,
+        `• <code>/search &lt;keyword&gt;</code> : Search reports by domain or description`,
+        `• <code>/get &lt;id&gt;</code> : View detailed report (with screenshot if available)`,
         ``,
-        `⚡️ <b>Thay đổi trạng thái:</b>`,
-        `• <code>/resolve &lt;id&gt;</code> : Đánh dấu đã sửa / bổ sung rule`,
-        `• <code>/ignore &lt;id&gt;</code> : Đánh dấu bỏ qua / không phải lỗi adblock`,
-        `• <code>/pending &lt;id&gt;</code> : Đặt lại trạng thái chờ xử lý`,
+        `⚡️ <b>Status Updates:</b>`,
+        `• <code>/resolve &lt;id&gt;</code> : Mark report as resolved / rule added`,
+        `• <code>/ignore &lt;id&gt;</code> : Mark report as ignored / invalid`,
+        `• <code>/pending &lt;id&gt;</code> : Reset status to pending`,
         ``,
-        `📝 <b>Gửi báo cáo nhanh:</b>`,
-        `• <code>/report &lt;url&gt; [mô tả]</code> : Tạo báo cáo trực tiếp từ Telegram`,
+        `📝 <b>Quick Report:</b>`,
+        `• <code>/report &lt;url&gt; [description]</code> : Create a new report directly from Telegram`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `💡 <i>Tip: Bạn có thể dùng 8 ký tự đầu của ID, ví dụ: <code>/resolve a1b2c3d4</code></i>`,
+        `💡 <i>Tip: You can use the first 8 characters of an ID, e.g. <code>/resolve a1b2c3d4</code></i>`,
       ].join("\n");
 
       await sendTelegramMessage(chatId, helpText, undefined, message.message_id);
@@ -177,7 +177,7 @@ async function handleMessage(message: {
       if (query.length === 0) {
         await sendTelegramMessage(
           chatId,
-          `📭 Không tìm thấy báo cáo nào ở trạng thái: <b>${escapeHtml(statusFilter)}</b>.`,
+          `📭 No reports found with status: <b>${escapeHtml(statusFilter)}</b>.`,
           undefined,
           message.message_id
         );
@@ -189,22 +189,22 @@ async function handleMessage(message: {
         const domain = r.url.replace(/^https?:\/\//i, "").split("/")[0];
         const statusBadge = formatStatusBadge(r.status);
         const cat = formatCategory(r.category);
-        const time = new Date(r.created_at).toLocaleDateString("vi-VN");
+        const time = new Date(r.created_at).toLocaleDateString("en-US");
 
         return [
           `<b>${i + 1}.</b> <code>#${shortId}</code> | ${statusBadge}`,
           `🌐 <a href="${escapeHtml(r.url)}">${escapeHtml(domain)}</a>`,
           `📌 ${cat} | 🕒 ${time}`,
-          `👉 Chi tiết: <code>/get ${shortId}</code>`,
+          `👉 Details: <code>/get ${shortId}</code>`,
         ].join("\n");
       }).join("\n\n");
 
       const responseText = [
-        `📋 <b>DANH SÁCH BÁO CÁO (${escapeHtml(statusFilter.toUpperCase())})</b>`,
+        `📋 <b>REPORT LIST (${escapeHtml(statusFilter.toUpperCase())})</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
         rowsText,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `<i>Hiển thị ${query.length} báo cáo gần nhất.</i>`,
+        `<i>Showing latest ${query.length} reports.</i>`,
       ].join("\n");
 
       await sendTelegramMessage(chatId, responseText, undefined, message.message_id);
@@ -235,17 +235,17 @@ async function handleMessage(message: {
 
       const topDomainText = topDomains.length > 0
         ? topDomains.map((d, i) => `${i + 1}. <b>${escapeHtml(d.domain)}</b>: ${d.count} reports`).join("\n")
-        : "<i>Chưa có dữ liệu</i>";
+        : "<i>No data available</i>";
 
       const statsText = [
-        `📊 <b>THỐNG KÊ BÁO CÁO BLOCKADS</b>`,
+        `📊 <b>BLOCKADS REPORT STATISTICS</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `📦 <b>Tổng cộng:</b> ${totalRow?.count || 0} báo cáo`,
-        `⏳ <b>Đang chờ (Pending):</b> ${statsMap.pending || 0}`,
-        `✅ <b>Đã xử lý (Resolved):</b> ${statsMap.resolved || 0}`,
-        `🚫 <b>Bỏ qua (Ignored):</b> ${statsMap.ignored || 0}`,
+        `📦 <b>Total Reports:</b> ${totalRow?.count || 0}`,
+        `⏳ <b>Pending:</b> ${statsMap.pending || 0}`,
+        `✅ <b>Resolved:</b> ${statsMap.resolved || 0}`,
+        `🚫 <b>Ignored:</b> ${statsMap.ignored || 0}`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `🔥 <b>Top 5 tên miền bị báo cáo nhiều nhất:</b>`,
+        `🔥 <b>Top 5 Most Reported Domains:</b>`,
         topDomainText,
       ].join("\n");
 
@@ -259,7 +259,7 @@ async function handleMessage(message: {
       if (!queryParam) {
         await sendTelegramMessage(
           chatId,
-          "⚠️ Vui lòng nhập từ khóa tìm kiếm.\nVí dụ: <code>/search kenh14</code> hoặc <code>/search popup</code>",
+          "⚠️ Please enter a keyword to search.\nExample: <code>/search example.com</code> or <code>/search popup</code>",
           undefined,
           message.message_id
         );
@@ -278,7 +278,7 @@ async function handleMessage(message: {
       if (results.length === 0) {
         await sendTelegramMessage(
           chatId,
-          `🔍 Không tìm thấy kết quả nào cho: <i>"${escapeHtml(queryParam)}"</i>`,
+          `🔍 No reports found matching: <i>"${escapeHtml(queryParam)}"</i>`,
           undefined,
           message.message_id
         );
@@ -292,12 +292,12 @@ async function handleMessage(message: {
         return [
           `<b>${i + 1}.</b> <code>#${shortId}</code> | ${badge}`,
           `🌐 <a href="${escapeHtml(r.url)}">${escapeHtml(domain)}</a>`,
-          `👉 Chi tiết: <code>/get ${shortId}</code>`,
+          `👉 Details: <code>/get ${shortId}</code>`,
         ].join("\n");
       }).join("\n\n");
 
       const searchText = [
-        `🔍 <b>KẾT QUẢ TÌM KIẾM CHO:</b> "${escapeHtml(queryParam)}"`,
+        `🔍 <b>SEARCH RESULTS FOR:</b> "${escapeHtml(queryParam)}"`,
         `━━━━━━━━━━━━━━━━━━━━`,
         itemsText,
       ].join("\n");
@@ -312,7 +312,7 @@ async function handleMessage(message: {
       if (!idInput) {
         await sendTelegramMessage(
           chatId,
-          "⚠️ Vui lòng nhập ID báo cáo.\nVí dụ: <code>/get a1b2c3d4</code>",
+          "⚠️ Please provide a report ID.\nExample: <code>/get a1b2c3d4</code>",
           undefined,
           message.message_id
         );
@@ -331,7 +331,7 @@ async function handleMessage(message: {
       if (!reports || reports.length === 0) {
         await sendTelegramMessage(
           chatId,
-          `❌ Không tìm thấy báo cáo với ID: <code>${escapeHtml(cleanId)}</code>`,
+          `❌ Report not found with ID: <code>${escapeHtml(cleanId)}</code>`,
           undefined,
           message.message_id
         );
@@ -341,16 +341,16 @@ async function handleMessage(message: {
       const r = reports[0];
       const shortId = r.id.slice(0, 8);
       const detailHtml = [
-        `🛡 <b>CHI TIẾT BÁO CÁO #${shortId}</b>`,
+        `🛡 <b>REPORT DETAILS #${shortId}</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `🌐 <b>Website:</b> <a href="${escapeHtml(r.url)}">${escapeHtml(r.url)}</a>`,
-        `📊 <b>Trạng thái:</b> ${formatStatusBadge(r.status)}`,
-        `📌 <b>Vấn đề:</b> ${escapeHtml(formatCategory(r.category))}`,
+        `📊 <b>Status:</b> ${formatStatusBadge(r.status)}`,
+        `📌 <b>Issue:</b> ${escapeHtml(formatCategory(r.category))}`,
         `⚙️ <b>Routing Mode:</b> ${escapeHtml(r.routing_mode || "N/A")}`,
-        `📝 <b>Mô tả:</b>\n${r.description ? escapeHtml(r.description) : "<i>Không có</i>"}`,
-        `👤 <b>Liên hệ:</b> ${r.contact ? escapeHtml(r.contact) : "<i>Ẩn danh</i>"}`,
-        `🕒 <b>Thời gian:</b> ${new Date(r.created_at).toLocaleString("vi-VN")}`,
-        `📱 <b>Thiết bị:</b> <code>${escapeHtml((r.user_agent || "N/A").slice(0, 100))}</code>`,
+        `📝 <b>Description:</b>\n${r.description ? escapeHtml(r.description) : "<i>None provided</i>"}`,
+        `👤 <b>Contact:</b> ${r.contact ? escapeHtml(r.contact) : "<i>Anonymous</i>"}`,
+        `🕒 <b>Time:</b> ${new Date(r.created_at).toLocaleString("en-US")}`,
+        `📱 <b>Device:</b> <code>${escapeHtml((r.user_agent || "N/A").slice(0, 100))}</code>`,
         `📍 <b>IP:</b> <code>${escapeHtml(r.ip || "N/A")}</code>`,
       ].join("\n");
 
@@ -373,7 +373,7 @@ async function handleMessage(message: {
       if (!idInput) {
         await sendTelegramMessage(
           chatId,
-          `⚠️ Vui lòng nhập ID báo cáo.\nVí dụ: <code>${command} a1b2c3d4</code>`,
+          `⚠️ Please provide a report ID.\nExample: <code>${command} a1b2c3d4</code>`,
           undefined,
           message.message_id
         );
@@ -395,7 +395,7 @@ async function handleMessage(message: {
       if (!updated || updated.length === 0) {
         await sendTelegramMessage(
           chatId,
-          `❌ Không tìm thấy báo cáo với ID: <code>${escapeHtml(cleanId)}</code>`,
+          `❌ Report not found with ID: <code>${escapeHtml(cleanId)}</code>`,
           undefined,
           message.message_id
         );
@@ -408,7 +408,7 @@ async function handleMessage(message: {
 
       await sendTelegramMessage(
         chatId,
-        `✅ Đã cập nhật báo cáo <code>#${shortId}</code> sang trạng thái ${formatStatusBadge(newStatus)}!\n🌐 <b>Website:</b> <a href="${escapeHtml(r.url)}">${escapeHtml(r.url)}</a>`,
+        `✅ Successfully updated report <code>#${shortId}</code> to ${formatStatusBadge(newStatus)}!\n🌐 <b>Website:</b> <a href="${escapeHtml(r.url)}">${escapeHtml(r.url)}</a>`,
         keyboard,
         message.message_id
       );
@@ -420,7 +420,7 @@ async function handleMessage(message: {
       if (!inputUrl) {
         await sendTelegramMessage(
           chatId,
-          "⚠️ Cú pháp: <code>/report &lt;website_url&gt; [mô tả vấn đề]</code>\nVí dụ: <code>/report https://example.com có quảng cáo pop-up</code>",
+          "⚠️ Usage: <code>/report &lt;website_url&gt; [issue description]</code>\nExample: <code>/report https://example.com popup ads appearing</code>",
           undefined,
           message.message_id
         );
@@ -465,19 +465,19 @@ async function handleMessage(message: {
 
         await sendTelegramMessage(
           chatId,
-          `🎉 <b>ĐÃ TẠO BÁO CÁO THÀNH CÔNG!</b> <code>#${shortId}</code>\n━━━━━━━━━━━━━━━━━━━━\n🌐 <b>Website:</b> <a href="${escapeHtml(normalizedUrl)}">${escapeHtml(normalizedUrl)}</a>\n📝 <b>Mô tả:</b> ${desc ? escapeHtml(desc) : "<i>Không có</i>"}\n👤 <b>Người báo cáo:</b> ${escapeHtml(sender)}`,
+          `🎉 <b>REPORT CREATED SUCCESSFULLY!</b> <code>#${shortId}</code>\n━━━━━━━━━━━━━━━━━━━━\n🌐 <b>Website:</b> <a href="${escapeHtml(normalizedUrl)}">${escapeHtml(normalizedUrl)}</a>\n📝 <b>Description:</b> ${desc ? escapeHtml(desc) : "<i>None</i>"}\n👤 <b>Reporter:</b> ${escapeHtml(sender)}`,
           keyboard,
           message.message_id
         );
       } catch (insertErr) {
         console.error("Error creating report via bot command:", insertErr);
-        await sendTelegramMessage(chatId, "❌ Có lỗi xảy ra khi lưu báo cáo vào cơ sở dữ liệu.", undefined, message.message_id);
+        await sendTelegramMessage(chatId, "❌ An error occurred while saving the report to the database.", undefined, message.message_id);
       }
       break;
     }
 
     default:
-      // Unknown command: silently ignore or show help if sent in private chat
+      // Unknown command: silently ignore
       break;
   }
 }
@@ -499,7 +499,7 @@ async function handleCallbackQuery(cb: {
 
   // Access control: Only user 1578783338 / admin chat can perform inline actions
   if (!isAuthorizedUser(senderId, chatId)) {
-    await answerTelegramCallbackQuery(cb.id, "⛔️ Bạn không có quyền thực hiện thao tác này.", true);
+    await answerTelegramCallbackQuery(cb.id, "⛔️ You do not have permission to perform this action.", true);
     return;
   }
 
@@ -525,27 +525,27 @@ async function handleCallbackQuery(cb: {
     `;
 
     if (!reports || reports.length === 0) {
-      await answerTelegramCallbackQuery(cb.id, "❌ Báo cáo không tồn tại hoặc đã bị xóa.", true);
+      await answerTelegramCallbackQuery(cb.id, "❌ Report not found or has been deleted.", true);
       return;
     }
 
     const r = reports[0];
     const userText = cb.from.username ? `@${cb.from.username}` : cb.from.first_name || "Admin";
     const detail = [
-      `🛡 <b>CHI TIẾT BÁO CÁO #${shortId}</b>`,
+      `🛡 <b>REPORT DETAILS #${shortId}</b>`,
       `🌐 <b>Website:</b> ${r.url}`,
-      `📊 <b>Trạng thái:</b> ${r.status}`,
-      `📌 <b>Vấn đề:</b> ${formatCategory(r.category)}`,
+      `📊 <b>Status:</b> ${r.status}`,
+      `📌 <b>Issue:</b> ${formatCategory(r.category)}`,
       `⚙️ <b>Routing:</b> ${r.routing_mode || "N/A"}`,
-      `📝 <b>Mô tả:</b> ${r.description || "Không có"}`,
-      `👤 <b>Người xem:</b> ${userText}`,
+      `📝 <b>Description:</b> ${r.description || "None"}`,
+      `👤 <b>Viewer:</b> ${userText}`,
     ].join("\n");
 
     if (cb.message?.chat.id) {
       const kb = getReportActionKeyboard(r.id, r.url, r.status);
       await sendTelegramMessage(cb.message.chat.id, detail, kb, cb.message.message_id);
     }
-    await answerTelegramCallbackQuery(cb.id, `Đã mở chi tiết #${shortId}`);
+    await answerTelegramCallbackQuery(cb.id, `Opened details for #${shortId}`);
     return;
   }
 
@@ -571,7 +571,7 @@ async function handleCallbackQuery(cb: {
   `;
 
   if (!updated || updated.length === 0) {
-    await answerTelegramCallbackQuery(cb.id, "❌ Báo cáo không tồn tại.", true);
+    await answerTelegramCallbackQuery(cb.id, "❌ Report not found.", true);
     return;
   }
 
@@ -579,12 +579,12 @@ async function handleCallbackQuery(cb: {
   const adminName = cb.from.username ? `@${cb.from.username}` : cb.from.first_name || "Admin";
 
   // Answer callback popup
-  await answerTelegramCallbackQuery(cb.id, `Đã chuyển #${shortId} sang ${statusText}!`);
+  await answerTelegramCallbackQuery(cb.id, `Updated #${shortId} to ${statusText}!`);
 
   // Update existing message keyboard & append operator note
   if (cb.message) {
     const updatedKeyboard = getReportActionKeyboard(r.id, r.url, newStatus);
-    const appendNote = `\n\n📌 <b>Cập nhật:</b> ${formatStatusBadge(newStatus)} bởi ${escapeHtml(adminName)}`;
+    const appendNote = `\n\n📌 <b>Updated:</b> ${formatStatusBadge(newStatus)} by ${escapeHtml(adminName)}`;
 
     if (cb.message.caption) {
       // It's a photo message

@@ -186,10 +186,10 @@ export function getReportActionKeyboard(reportId: string, url?: string, currentS
   }
 
   const row2: TelegramInlineKeyboardButton[] = [
-    { text: "ℹ️ Chi tiết", callback_data: `det:${shortId}` },
+    { text: "ℹ️ Details", callback_data: `det:${shortId}` },
   ];
   if (url) {
-    row2.push({ text: "🌐 Mở trang", url: url.startsWith("http") ? url : `https://${url}` });
+    row2.push({ text: "🌐 Open Site", url: url.startsWith("http") ? url : `https://${url}` });
   }
   buttons.push(row2);
 
