@@ -245,7 +245,7 @@ export default function PreRegisterForm() {
         {/* Privacy Note */}
         <div className="flex items-center justify-center gap-2 text-xs text-gray-500 pt-1">
           <ShieldCheck className="w-4 h-4 text-[#00E676]" />
-          <span>Zero spam. 100% open-source. Unsubscribe at any time.</span>
+          <span>Zero spam. Your email will only be used for release updates.</span>
         </div>
       </form>
     </div>
