@@ -118,7 +118,7 @@ export default function PreRegisterForm() {
         {/* Platform Selection */}
         <div>
           <label className="block text-sm font-semibold text-gray-900 mb-3">
-            1. Select your target platform(s):
+            Select platform:
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* macOS Option */}
@@ -142,13 +142,13 @@ export default function PreRegisterForm() {
               </div>
               <div>
                 <div className="font-semibold text-gray-900 flex items-center gap-2">
-                  <svg className="w-4 h-4" viewBox="0 0 170 170" fill="currentColor">
-                    <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.04-7.67-7.81-11.96-14.34-6.3-9.74-11.22-21.2-14.75-34.37-3.53-13.17-5.3-25.12-5.3-35.84 0-14.38 3.59-26.27 10.77-35.67 7.18-9.4 16.2-14.2 27.06-14.42 4.9.11 10.37 1.34 16.42 3.69 6.04 2.35 10.1 3.59 12.18 3.69 1.74 0 5.86-1.28 12.38-3.83 6.52-2.55 12.22-3.75 17.1-3.59 13.06.65 23.36 5.38 30.9 14.19-11.53 6.96-17.18 16.64-16.96 29.04.22 9.79 3.97 18.06 11.26 24.81 7.29 6.75 16.05 10.66 26.27 11.75-2.18 6.53-4.95 13.38-8.32 20.55zM119.22 32.55c0-7.29 2.61-14.03 7.83-20.22 5.22-6.19 11.69-10.39 19.41-12.6-1.09 7.07-3.75 13.6-7.98 19.6-4.23 6-10.49 10.34-18.78 13.02-.16-.6-.48-1.55-.48-2.8z" />
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 1.01-2.87-.96.04-2.1.65-2.76 1.43-.59.68-1.11 1.76-.97 2.8 1.07.08 2.11-.61 2.72-1.36z" />
                   </svg>
                   macOS
                 </div>
                 <div className="text-xs text-gray-500 mt-0.5">
-                  Apple Silicon (M1–M4) & Intel
+                  Apple Silicon & Intel
                 </div>
               </div>
             </button>
@@ -174,13 +174,13 @@ export default function PreRegisterForm() {
               </div>
               <div>
                 <div className="font-semibold text-gray-900 flex items-center gap-2">
-                  <svg className="w-4 h-4" viewBox="0 0 88 88" fill="currentColor">
-                    <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.016 45.728zm4.326-39.027L87.914 0v41.527l-47.918.375zm47.918 47.034L40.024 88l-.028-34.587 47.918.29z" />
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M0 0h11v11H0V0zm13 0h11v11H13V0zM0 13h11v11H0V13zm13 0h11v11H13V13z" />
                   </svg>
                   Windows
                 </div>
                 <div className="text-xs text-gray-500 mt-0.5">
-                  Windows 10 / 11 (x64 & ARM64)
+                  Windows 10 / 11
                 </div>
               </div>
             </button>
@@ -190,7 +190,7 @@ export default function PreRegisterForm() {
         {/* Email Input */}
         <div>
           <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
-            2. Enter your email for early invitation:
+            Email address:
           </label>
           <div className="relative">
             <input
@@ -223,12 +223,12 @@ export default function PreRegisterForm() {
           {loading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Securing your spot...
+              Submitting...
             </>
           ) : (
             <>
               <Sparkles className="w-5 h-5" />
-              Pre-Register for Desktop Beta
+              Pre-Register
             </>
           )}
         </button>
