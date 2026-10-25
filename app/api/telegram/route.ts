@@ -136,6 +136,7 @@ async function handleMessage(message: {
         `📋 <b>Report Management:</b>`,
         `• <code>/reports [status]</code> : List recent reports (<i>pending, resolved, ignored, all</i>). Default: <i>pending</i>`,
         `• <code>/stats</code> : Overview statistics & top reported domains`,
+        `• <code>/waitlist</code> : View desktop pre-registration count & recent signups`,
         `• <code>/search &lt;keyword&gt;</code> : Search reports by domain or description`,
         `• <code>/get &lt;id&gt;</code> : View detailed report (with screenshot if available)`,
         ``,
@@ -215,6 +216,14 @@ async function handleMessage(message: {
 
     case "/stats": {
       const [totalRow] = await sql`SELECT count(*)::int as count FROM website_reports`;
+      let waitlistCount = 0;
+      try {
+        const [wRow] = await sql`SELECT count(*)::int as count FROM pre_registrations`;
+        waitlistCount = wRow?.count || 0;
+      } catch {
+        // pre_registrations table may not exist yet
+      }
+
       const statusRows = await sql`
         SELECT status, count(*)::int as count
         FROM website_reports
@@ -240,8 +249,9 @@ async function handleMessage(message: {
         : "<i>No data available</i>";
 
       const statsText = [
-        `📊 <b>BLOCKADS REPORT STATISTICS</b>`,
+        `📊 <b>BLOCKADS STATISTICS</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
+        `👥 <b>Desktop Waitlist:</b> ${waitlistCount} users`,
         `📦 <b>Total Reports:</b> ${totalRow?.count || 0}`,
         `⏳ <b>Pending:</b> ${statsMap.pending || 0}`,
         `✅ <b>Resolved:</b> ${statsMap.resolved || 0}`,
@@ -252,6 +262,49 @@ async function handleMessage(message: {
       ].join("\n");
 
       await sendTelegramMessage(chatId, statsText, undefined, message.message_id);
+      break;
+    }
+
+    case "/waitlist":
+    case "/preregister": {
+      try {
+        let totalCount = 0;
+        let recentRows: Record<string, unknown>[] = [];
+        try {
+          const [wRow] = await sql`SELECT count(*)::int as count FROM pre_registrations`;
+          totalCount = wRow?.count || 0;
+          recentRows = await sql`
+            SELECT email, platforms, created_at
+            FROM pre_registrations
+            ORDER BY created_at DESC
+            LIMIT 10
+          `;
+        } catch {
+          // pre_registrations table may not exist yet
+        }
+
+        const recentList = recentRows.length > 0
+          ? recentRows.map((r, i) => {
+              const email = String(r.email || "");
+              const platforms = Array.isArray(r.platforms) ? r.platforms.join(", ") : "";
+              return `${i + 1}. <code>${escapeHtml(email)}</code> [${escapeHtml(platforms)}]`;
+            }).join("\n")
+          : "<i>No registrations yet</i>";
+
+        const text = [
+          `👥 <b>BLOCKADS DESKTOP WAITLIST</b>`,
+          `━━━━━━━━━━━━━━━━━━━━`,
+          `🔥 <b>Total Pre-Registrations:</b> ${totalCount}`,
+          `━━━━━━━━━━━━━━━━━━━━`,
+          `<b>Recent Signups (Last 10):</b>`,
+          recentList,
+        ].join("\n");
+
+        await sendTelegramMessage(chatId, text, undefined, message.message_id);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        await sendTelegramMessage(chatId, `⚠️ Error: ${escapeHtml(msg)}`, undefined, message.message_id);
+      }
       break;
     }
 
