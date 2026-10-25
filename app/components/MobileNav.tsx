@@ -55,6 +55,14 @@ export default function MobileNav() {
                         }`}
                 >
                     <Link
+                        href="/pre-register"
+                        onClick={() => setOpen(false)}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00E676]/10 border border-[#00E676]/30 text-emerald-800 font-bold text-base hover:bg-[#00E676]/20 transition-all"
+                    >
+                        <span className="w-2 h-2 rounded-full bg-[#00E676] animate-pulse" />
+                        <span>Pre-Register (Mac & PC)</span>
+                    </Link>
+                    <Link
                         href="/#features"
                         onClick={() => setOpen(false)}
                         className="text-xl text-gray-600 hover:text-gray-900 transition-colors"

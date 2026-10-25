@@ -81,6 +81,13 @@ function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 text-sm text-gray-600">
           <Link
+            href="/pre-register"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00E676]/10 border border-[#00E676]/30 text-emerald-800 hover:bg-[#00E676]/20 font-semibold text-xs transition-all shadow-sm"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00E676] animate-pulse" />
+            <span>Pre-Register (Mac & PC)</span>
+          </Link>
+          <Link
             href="/#features"
             className="hover:text-gray-900 transition-colors"
           >
@@ -145,6 +152,9 @@ function Footer() {
             <div className="flex flex-col gap-2 text-sm text-gray-600">
               <Link href="/" className="hover:text-gray-900 transition-colors">
                 Home
+              </Link>
+              <Link href="/pre-register" className="hover:text-[#00E676] font-medium transition-colors">
+                Pre-Register (macOS & Windows)
               </Link>
               <Link href="/report" className="hover:text-[#00E676] transition-colors font-medium text-gray-900">
                 Report Website

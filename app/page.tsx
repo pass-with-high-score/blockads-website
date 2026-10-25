@@ -8,7 +8,6 @@ import {
   Settings,
   Palette,
   Zap,
-  Save,
   Battery,
   Gift,
   Github,
@@ -36,6 +35,18 @@ export default function Home() {
         </div>
 
         <div className="text-center px-6 relative z-10 max-w-3xl mx-auto">
+          {/* Announcement */}
+          <Link
+            href="/pre-register"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00E676]/10 border border-[#00E676]/30 text-emerald-800 text-xs sm:text-sm font-semibold mb-6 hover:bg-[#00E676]/20 transition-all group shadow-sm"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#00E676] animate-pulse" />
+            <span>BlockAds is coming to macOS & Windows!</span>
+            <span className="text-[#00A854] font-bold group-hover:translate-x-0.5 transition-transform">
+              Pre-Register &rarr;
+            </span>
+          </Link>
+
           {/* Title */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
             Block Ads.
