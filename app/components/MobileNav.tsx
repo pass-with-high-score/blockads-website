@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import GooglePlayIcon from "./GooglePlayIcon";
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
@@ -121,6 +122,16 @@ export default function MobileNav() {
                         className="text-xl text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         Reddit
+                    </a>
+                    <a
+                        href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpen(false)}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gray-900 text-white text-base font-semibold hover:bg-black transition-all shadow-md mt-2"
+                    >
+                        <GooglePlayIcon className="w-5 h-5 shrink-0" />
+                        Get on Google Play
                     </a>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
 import MobileNav from "./components/MobileNav";
+import GooglePlayIcon from "./components/GooglePlayIcon";
 import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
@@ -36,7 +37,12 @@ export const metadata: Metadata = {
     "system-wide adblock",
     "free",
     "open source",
+    "google play",
+    "google play store",
   ],
+  other: {
+    "google-play-app": "app-id=app.pwhs.blockads",
+  },
   authors: [{ name: "pass-with-high-score" }],
   creator: "pass-with-high-score",
   publisher: "BlockAds",
@@ -120,6 +126,15 @@ function Navbar() {
           <a href="https://www.reddit.com/r/BlockAds/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
             Reddit
           </a>
+          <a
+            href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-900 text-white text-xs font-semibold hover:bg-black transition-all hover:scale-105 shadow-sm"
+          >
+            <GooglePlayIcon className="w-3.5 h-3.5 shrink-0" />
+            Google Play
+          </a>
         </div>
 
         {/* Mobile nav */}
@@ -133,7 +148,7 @@ function Footer() {
   return (
     <footer className="border-t border-gray-200 py-12 mt-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image src="/icon.svg" alt="BlockAds" width={28} height={28} className="rounded-lg" />
@@ -144,8 +159,38 @@ function Footer() {
             <p className="text-sm text-gray-600 leading-relaxed">
               Free, open-source ad blocker for Android.
               <br />
-              No root. No data collection. No ads.
+              Dual Routing. Zero data collection.
             </p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm mb-3">Download</h4>
+            <div className="flex flex-col gap-2 text-sm text-gray-600">
+              <a
+                href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-900 transition-colors flex items-center gap-1.5"
+              >
+                <GooglePlayIcon className="w-4 h-4 shrink-0" />
+                Google Play
+              </a>
+              <a
+                href="https://apt.izzysoft.de/packages/app.pwhs.blockads"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-900 transition-colors"
+              >
+                IzzyOnDroid
+              </a>
+              <a
+                href="https://github.com/pass-with-high-score/blockads-android/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-900 transition-colors"
+              >
+                GitHub Releases
+              </a>
+            </div>
           </div>
           <div>
             <h4 className="font-semibold text-sm mb-3">Links</h4>
@@ -157,7 +202,7 @@ function Footer() {
                 Pre-Register (macOS & Windows)
               </Link>
               <Link href="/report" className="hover:text-[#00E676] transition-colors font-medium text-gray-900">
-                Report Website
+                Report Site
               </Link>
               <Link href="/compiler" className="hover:text-gray-900 transition-colors">
                 Filter Compiler

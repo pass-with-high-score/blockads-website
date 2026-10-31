@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import GooglePlayIcon from "./components/GooglePlayIcon";
 
 export default function Home() {
   return (
@@ -60,6 +61,15 @@ export default function Home() {
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
+            <a
+              href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-gray-900 text-white font-medium rounded-2xl text-lg hover:bg-black transition-all flex items-center justify-center gap-2.5 shadow-md hover:shadow-xl hover:-translate-y-0.5"
+            >
+              <GooglePlayIcon className="w-5 h-5 shrink-0" />
+              Google Play
+            </a>
             <a
               href="https://github.com/pass-with-high-score/blockads-android/releases"
               target="_blank"
@@ -410,15 +420,15 @@ export default function Home() {
           <p className="text-gray-600 mb-10">
             Take back control of your Android experience today.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
             <a
-              href="https://github.com/pass-with-high-score/blockads-android/releases"
+              href="https://play.google.com/store/apps/details?id=app.pwhs.blockads"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 border border-gray-300 bg-white text-gray-900 font-semibold rounded-2xl text-lg hover:bg-gray-50 transition-all shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-10 py-4 bg-gray-900 text-white font-semibold rounded-2xl text-lg hover:bg-black transition-all hover:scale-105 shadow-xl"
             >
-              <Github className="w-5 h-5" />
-              GitHub Releases
+              <GooglePlayIcon className="w-6 h-6 shrink-0" />
+              Get on Google Play
             </a>
             <a
               href="https://apt.izzysoft.de/packages/app.pwhs.blockads"
@@ -428,6 +438,15 @@ export default function Home() {
             >
               <Download className="w-5 h-5" />
               Get on IzzyOnDroid
+            </a>
+            <a
+              href="https://github.com/pass-with-high-score/blockads-android/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-10 py-4 border border-gray-300 bg-white text-gray-900 font-semibold rounded-2xl text-lg hover:bg-gray-50 transition-all shadow-sm"
+            >
+              <Github className="w-5 h-5" />
+              GitHub Releases
             </a>
           </div>
         </div>
